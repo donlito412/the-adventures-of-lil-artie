@@ -32,4 +32,10 @@ export const assetSlots = {
     path: '/assets/models/weapons/whip.glb',
     scale: 1,
   },
+  prototypeTerrain: {
+    id: 'prototype-terrain',
+    type: 'environment',
+    path: '/assets/models/snowy_mountain_terrain__optimized_mesh.glb',
+    scale: 1,
+  },
 } satisfies Record<string, AssetSlot>;

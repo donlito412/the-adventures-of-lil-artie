@@ -36,7 +36,7 @@ export class PlayCanvasGame {
     this.createFpsCounter();
     this.createLighting();
     this.createCamera();
-    this.createWorld();
+    await this.createWorld();
 
     this.updateLoadingStatus('Loading real asset slots...', 55);
     await this.createPlayer();
@@ -82,15 +82,26 @@ export class PlayCanvasGame {
     this.app.root.addChild(this.camera);
   }
 
-  private createWorld(): void {
-    const ground = new pc.Entity('prototype-island-ground');
+  private async createWorld(): Promise<void> {
+    const loader = new PlayCanvasAssetLoader(this.app);
+    const terrain = await loader.loadSlot(assetSlots.prototypeTerrain);
+
+    if (terrain) {
+      terrain.name = 'prototype-terrain-real-asset';
+      terrain.setPosition(0, 0, 0);
+      this.app.root.addChild(terrain);
+    }
+
+    const ground = new pc.Entity(terrain ? 'prototype-ground-collider-base' : 'prototype-island-ground');
     ground.addComponent('render', { type: 'box' });
-    ground.setLocalScale(80, 0.2, 80);
-    ground.setPosition(0, -0.1, 0);
+    ground.setLocalScale(terrain ? 120 : 80, 0.2, terrain ? 120 : 80);
+    ground.setPosition(0, terrain ? -0.25 : -0.1, 0);
     this.app.root.addChild(ground);
 
     const groundMat = new pc.StandardMaterial();
-    groundMat.diffuse = new pc.Color(0.33, 0.62, 0.22);
+    groundMat.diffuse = terrain ? new pc.Color(0.15, 0.18, 0.16) : new pc.Color(0.33, 0.62, 0.22);
+    groundMat.opacity = terrain ? 0.18 : 1;
+    groundMat.blendType = terrain ? pc.BLEND_NORMAL : pc.BLEND_NONE;
     groundMat.update();
     ground.render!.material = groundMat;
 

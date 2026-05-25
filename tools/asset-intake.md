@@ -14,11 +14,19 @@
 Place files here with these names:
 
 - `public/assets/models/characters/lil-artie.glb`
+- `public/assets/models/snowy_mountain_terrain__optimized_mesh.glb`
 - `public/assets/models/weapons/boomerang.glb`
 - `public/assets/models/weapons/dagger.glb`
 - `public/assets/models/weapons/whip.glb`
 
 The active PlayCanvas runtime auto-loads these files when present and falls back to placeholders when missing.
+
+## Active Terrain
+
+- Current terrain: `public/assets/models/snowy_mountain_terrain__optimized_mesh.glb`
+- Staged but not active: `public/assets/terrain_dristibute_gn.glb`
+
+The staged terrain file is too large for the current browser scene pass and needs optimization before use.
 
 ## Workflow
 

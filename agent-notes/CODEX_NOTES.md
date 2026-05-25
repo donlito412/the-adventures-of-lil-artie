@@ -114,6 +114,30 @@ Notes and observations from the Codex agent (code implementation).
 
 ---
 
+## Session: 2026-05-25 — Terrain Asset Intake
+
+**Status**: First real terrain asset is wired into the active runtime.
+
+**Completed:**
+- Selected `public/assets/models/snowy_mountain_terrain__optimized_mesh.glb` as the first active terrain asset
+- Left `public/assets/terrain_dristibute_gn.glb` out of the active runtime because it is too large for the current browser scene pass
+- Added `prototypeTerrain` to the PlayCanvas asset manifest
+- Updated the PlayCanvas world bootstrap to load the terrain GLB before creating the player
+- Kept a thin base collider under the imported terrain for current movement testing
+- Uploaded the selected terrain GLB to the PlayCanvas project asset library
+- Placed the uploaded terrain model into the PlayCanvas Editor scene hierarchy as `REAL_TERRAIN__snowy_mountain_terrain`
+
+**Verified:**
+- `npm run type-check`
+- `npm run build`
+
+**Next coding priorities:**
+1. Tune terrain scale and player spawn height after visual placement.
+2. Replace the temporary base collider with terrain-appropriate collision.
+3. Add the real Lil Artie character asset next.
+
+---
+
 ## Session: 2026-05-25 — Phase 2 Input System
 
 **Status**: Phase 2 input support is implemented and build-verified.
