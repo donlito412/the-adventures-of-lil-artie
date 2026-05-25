@@ -28,6 +28,13 @@ The active PlayCanvas runtime auto-loads these files when present and falls back
 
 The staged terrain file is too large for the current browser scene pass and needs optimization before use.
 
+## Active Character
+
+- Current Lil Artie model: `public/assets/models/characters/lil-artie.glb`
+- Source pack: `public/Meshy_AI_Explorer’s_Journey_biped/`
+
+The active character uses the Meshy walking skinned GLB as the first playable character model.
+
 ## Workflow
 
 1. Generate or buy the asset.

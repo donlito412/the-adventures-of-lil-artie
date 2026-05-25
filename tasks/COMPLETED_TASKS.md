@@ -85,3 +85,5 @@ _Log completed work here. Format: `[DATE] [AGENT] Task description`_
 - [2026-05-25] [CODEX] Wired `snowy_mountain_terrain__optimized_mesh.glb` into the active PlayCanvas runtime terrain slot
 - [2026-05-25] [CODEX] Uploaded `snowy_mountain_terrain__optimized_mesh.glb` to the PlayCanvas asset library for project `1533403`
 - [2026-05-25] [CODEX] Placed uploaded terrain model into the PlayCanvas Editor scene hierarchy as `REAL_TERRAIN__snowy_mountain_terrain`
+- [2026-05-25] [CODEX] Added Meshy skinned character GLB to the active Lil Artie character asset slot
+- [2026-05-25] [CODEX] Uploaded Lil Artie Meshy GLB to PlayCanvas and placed it in the Editor scene as `REAL_LIL_ARTIE__meshy_character`

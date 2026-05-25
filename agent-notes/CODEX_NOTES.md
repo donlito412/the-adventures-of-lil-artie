@@ -138,6 +138,24 @@ Notes and observations from the Codex agent (code implementation).
 
 ---
 
+## Session: 2026-05-25 — Meshy Character Intake
+
+**Status**: First real Lil Artie character asset is wired into the active runtime.
+
+**Completed:**
+- Selected the Meshy walking skinned GLB as the first runtime character model
+- Copied it to `public/assets/models/characters/lil-artie.glb`
+- Uploaded `lil-artie.glb` to PlayCanvas project `1533403`
+- Placed the generated model in the Editor scene as `REAL_LIL_ARTIE__meshy_character`
+- Left the full Meshy source folder and zip untracked as source/staging files
+
+**Next coding priorities:**
+1. Tune character scale and spawn height against the real terrain.
+2. Connect the walking animation asset to the player controller.
+3. Decide which Meshy animation GLBs should be merged into the final character animation set.
+
+---
+
 ## Session: 2026-05-25 — Phase 2 Input System
 
 **Status**: Phase 2 input support is implemented and build-verified.
