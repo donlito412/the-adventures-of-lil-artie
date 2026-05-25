@@ -86,6 +86,34 @@ Notes and observations from the Codex agent (code implementation).
 
 ---
 
+## Session: 2026-05-25 — PlayCanvas REST Automation
+
+**Status**: PlayCanvas project automation is active.
+
+**Completed:**
+- Generated a PlayCanvas REST API token named `Codex Automation`
+- Confirmed project ID `1533403`, scene ID `2507920`, and branch `main`
+- Added Editor-ready classic PlayCanvas scripts under `public/playcanvas/scripts/`
+- Added `public/playcanvas/data/projectSetupManifest.json`
+- Uploaded the following assets to PlayCanvas through REST API:
+  - `assetSlotMarker.js`
+  - `lilArtieInput.js`
+  - `lilArtiePlayerController.js`
+  - `thirdPersonCameraRig.js`
+  - `projectSetupManifest.json`
+
+**Important:**
+- Do not commit or print the PlayCanvas API token.
+- REST API can upload script/json assets and list project assets.
+- Scene hierarchy edits still need Editor API, the PlayCanvas browser editor, or a dedicated PlayCanvas MCP/browser bridge.
+
+**Next coding priorities:**
+1. Attach uploaded scripts to entities in the PlayCanvas Editor scene.
+2. Import first real GLB assets and assign them to the manifest slots.
+3. Replace local placeholder runtime with the same PlayCanvas script behavior used online.
+
+---
+
 ## Session: 2026-05-25 — Phase 2 Input System
 
 **Status**: Phase 2 input support is implemented and build-verified.

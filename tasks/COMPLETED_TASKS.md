@@ -79,3 +79,6 @@ _Log completed work here. Format: `[DATE] [AGENT] Task description`_
 - [2026-05-25] [CODEX] Installed PlayCanvas and removed Babylon runtime dependencies
 - [2026-05-25] [CODEX] Added active PlayCanvas scene bootstrap, movement test, camera follow, lighting, and asset-slot loader
 - [2026-05-25] [CODEX] Updated README, asset intake notes, and decision log for PlayCanvas-first workflow
+- [2026-05-25] [CODEX] Generated PlayCanvas REST API token and verified project branch `main`
+- [2026-05-25] [CODEX] Added PlayCanvas Editor-ready scripts for input, third-person camera, player movement, and asset slot tagging
+- [2026-05-25] [CODEX] Uploaded PlayCanvas scripts and project setup manifest to project `1533403`, scene `2507920`

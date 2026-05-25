@@ -1,0 +1,25 @@
+{
+  "project": "The Adventures Of Lil Artie",
+  "playcanvasProjectId": 1533403,
+  "playcanvasSceneId": 2507920,
+  "branchName": "main",
+  "assetStyle": "stylized-realistic adventure assets with warm natural lighting, readable silhouettes, optimized GLB files, and consistent material scale",
+  "requiredAssetSlots": [
+    "Lil Artie hero character",
+    "boomerang",
+    "whip",
+    "dagger",
+    "human enemy",
+    "NPC guide",
+    "jungle island terrain",
+    "cave entrance",
+    "treasure chest",
+    "enemy camp props"
+  ],
+  "scripts": [
+    "lilArtieInput.js",
+    "lilArtiePlayerController.js",
+    "thirdPersonCameraRig.js",
+    "assetSlotMarker.js"
+  ]
+}

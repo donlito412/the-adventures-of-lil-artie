@@ -15,6 +15,7 @@ _None yet._
 - [2026-05-25] [Resolved] Player fell through the prototype terrain because ground had no physics body -> Added a static Havok physics aggregate to the ground mesh.
 - [2026-05-25] [Resolved] Missing GLB asset paths could be mistaken for valid files because Vite returned `index.html` -> Asset availability now rejects HTML responses and safely falls back to placeholders.
 - [2026-05-25] [Resolved] Player/controller forward movement was inverted -> Keyboard forward and gamepad left-stick-up now map to positive forward movement.
+- [2026-05-25] [Resolved] PlayCanvas REST curl calls were sent with an empty bearer value because inline shell assignment expanded too early -> Use a shell variable assigned before the `curl` command.
 
 ---
 

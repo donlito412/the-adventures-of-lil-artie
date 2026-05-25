@@ -90,3 +90,11 @@ Major architectural and design decisions. All agents must read this before start
 **Decision**: Switch the active runtime from Babylon.js to PlayCanvas.
 **Reason**: The project needs a sellable asset-first workflow with an online editor, real GLB assets, visual scene layout, and fewer tool switches.
 **Impact**: `src/main.ts`, `src/game.ts`, and `src/playcanvas/` are the active runtime. Babylon prototype files remain temporarily as inactive reference code. Dependencies now use `playcanvas`.
+
+---
+
+## [2026-05-25] Automation: PlayCanvas REST API + Editor API
+
+**Decision**: Use PlayCanvas REST API for repeatable uploads/build automation and the PlayCanvas Editor/API for scene hierarchy work.
+**Reason**: REST API is stable for script/json asset uploads and project queries. Scene layout still benefits from the browser editor.
+**Impact**: Editor-ready assets now live in `public/playcanvas/` and are uploaded to PlayCanvas project `1533403` on branch `main`.
