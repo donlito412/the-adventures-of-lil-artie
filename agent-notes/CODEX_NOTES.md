@@ -4,6 +4,36 @@ Notes and observations from the Codex agent (code implementation).
 
 ---
 
+## Session: 2026-05-25 — Terrain Dupe + T-Pose Fix
+
+**Status**: Both bugs fixed, TypeScript clean.
+
+**Bug 1 — Double terrain:**
+- Root cause: `createWorld()` always loaded the terrain GLB AND always created a ground box. When terrain loaded, the box was rendered with `opacity: 0.18` which still showed as a second layer.
+- Fix: Terrain logic now follows a strict either/or pattern — if the GLB loads, that is the terrain, nothing else is added. If the GLB is unavailable, the fallback flat green ground box appears.
+
+**Bug 2 — T-pose / no animation:**
+- Root cause: `PlayCanvasAssetLoader.loadSlot()` called `instantiateRenderEntity()` which creates the mesh hierarchy but does NOT initialise the PlayCanvas animation state machine. The `anim` component was never added.
+- Fix: Replaced the old loader-based player creation with a direct `loadFromUrl` call in `createPlayer()`. After mesh instantiation, the code now adds the `anim` component, calls `loadStateGraph()` with a minimal one-layer graph (START → locomotion → END), and calls `assignAnimation('locomotion', animAssets[0].resource, 'Base Layer')`.
+- The walking animation embedded in `lil-artie.glb` (Meshy Walking GLB) now plays automatically on load.
+
+**Editor scene cleanup:**
+- Disabled and moved the default PlayCanvas `Box` and `Plane` out of the active scene view.
+- Moved `REAL_LIL_ARTIE__meshy_character` onto the terrain area.
+- Attached the uploaded walking animation asset to Lil Artie in the Editor scene.
+- Reframed the launch camera toward Lil Artie and the terrain.
+
+**Verified:**
+- `npx tsc --noEmit` → clean
+- `npx vite build` → 1168 modules transformed successfully (EPERM on .DS_Store is a Linux sandbox limitation only, not a code issue)
+
+**Next priorities:**
+1. Wire animation state to movement — play walk clip when moving, idle (or pause) when still.
+2. Import additional Meshy animation GLBs (run, jump, attack) and add them as named states.
+3. Tune player spawn height against the real terrain surface.
+
+---
+
 ## Session: 2026-05-24 — Project Initialization
 
 **Status**: Project scaffolded. Source stubs created.

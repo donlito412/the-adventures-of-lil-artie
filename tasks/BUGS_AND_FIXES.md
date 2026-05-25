@@ -6,9 +6,13 @@ _Log bugs and their resolutions here. Format: `[DATE] [STATUS] Bug description �
 
 ## Open Bugs
 
-_None yet._
+_None._
 
 ## Resolved Bugs
+
+- [2026-05-25] [Resolved] Double terrain — `createWorld()` always created a visible ground box ON TOP of the loaded terrain GLB, resulting in two overlapping terrain objects → Rewrote terrain logic: GLB terrain is the sole terrain when loaded; fallback ground box only appears when the GLB is unavailable. File: `src/playcanvas/playCanvasGame.ts`.
+- [2026-05-25] [Resolved] Character in T-pose — `PlayCanvasAssetLoader.loadSlot()` called `instantiateRenderEntity()` which renders the mesh but never initialises the PlayCanvas anim system → Rewrote `createPlayer()` to add the `anim` component, load a minimal state graph (START → locomotion → END), and call `assignAnimation()` with the first embedded animation clip from the GLB container. File: `src/playcanvas/playCanvasGame.ts`.
+- [2026-05-25] [Resolved] PlayCanvas launch scene still showed the default `Plane` and `Box`, and Lil Artie was not placed on the real terrain → Disabled/moved the default objects in the Editor scene, moved Lil Artie onto the terrain area, attached the walking animation asset, and reframed the launch camera.
 
 - [2026-05-25] [Resolved] TypeScript build failed on Vite env typing, Babylon engine type mismatch, and HUD GUI API usage -> Added Vite client typing, typed engine wrapper as AbstractEngine, and corrected HUD imports/alignment.
 - [2026-05-25] [Resolved] First browser launch showed Babylon loading UI over the scene -> Replaced `displayLoadingUI()` FPS placeholder with a real DOM FPS overlay.
