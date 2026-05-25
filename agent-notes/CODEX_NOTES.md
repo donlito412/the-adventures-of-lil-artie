@@ -1,0 +1,268 @@
+# CODEX NOTES
+
+Notes and observations from the Codex agent (code implementation).
+
+---
+
+## Session: 2026-05-24 — Project Initialization
+
+**Status**: Project scaffolded. Source stubs created.
+
+**Architecture decisions implemented:**
+- Used `@babylonjs/core` v7.x for scene, mesh, physics
+- Havok physics via `@babylonjs/havok` — async initialization required
+- Vite aliases set up for all src/ subdirectories
+- WebGPU with WebGL fallback in `engine.ts`
+- Input system uses three-layer merge: gamepad > keyboard > mouse for movement, gamepad and keyboard for camera
+
+**Files created:**
+- All 50+ TypeScript source stubs in src/
+- All stubs include interfaces, class shells, and TODO comments for implementation
+
+**Next coding priorities:**
+1. Hook up Havok physics properly with capsule collider on player
+2. Implement proper grounded check via physics raycast (currently approximate)
+3. Wire up BabylonJS Gamepad Manager alongside Browser Gamepad API for gamepad support
+4. Test that Babylon GUI (AdvancedDynamicTexture) renders HUD correctly
+5. Implement proper boomerang hit detection with sphere overlap query
+
+**Known limitations in current stubs:**
+- `playerMovement.ts`: grounded check is a velocity approximation, needs proper physics raycast
+- `climbing.ts`: uses ray + metadata tag — need to tag climbable meshes in worldManager
+- `whipSwing.ts`: pendulum physics is simplified — may need constraints API
+- `boomerang.ts`: no actual hit detection yet — needs sphere overlap query each frame
+
+**DO NOT overwrite:** worldManager.ts (scene setup is working reference), game.ts (entry point)
+
+---
+
+## Session: 2026-05-25 — First Runnable Build
+
+**Status**: Phase 1 is now runnable and verified.
+
+**Completed:**
+- Installed npm dependencies and generated `package-lock.json`
+- Added Vite client type reference in `src/vite-env.d.ts`
+- Fixed Babylon engine typing so WebGPU and WebGL fallback both compile through `AbstractEngine`
+- Fixed HUD GUI imports and right-aligned quest text positioning
+- Replaced incorrect Babylon loading UI FPS placeholder with a DOM FPS counter
+- Added a static Havok physics body to the ground so the player does not fall through the scene
+
+**Verified:**
+- `npm run type-check`
+- `npm run build`
+
+---
+
+## Session: 2026-05-25 — PlayCanvas Engine Switch
+
+**Status**: Active runtime switched to PlayCanvas.
+
+**Completed:**
+- Installed `playcanvas`
+- Removed Babylon runtime dependencies
+- Replaced active `src/main.ts` and `src/game.ts`
+- Added `src/playcanvas/` runtime files
+- Added PlayCanvas GLB asset-slot loader
+- Updated TypeScript include list to check the active PlayCanvas runtime only
+- Updated README, asset intake notes, and decision log
+
+**Active asset slots:**
+- `public/assets/models/characters/lil-artie.glb`
+- `public/assets/models/weapons/boomerang.glb`
+- `public/assets/models/weapons/dagger.glb`
+- `public/assets/models/weapons/whip.glb`
+
+**Remaining transition work:**
+- Rebuild gameplay systems in PlayCanvas instead of carrying Babylon-specific code forward.
+- Import real assets and tune scale/materials before rebuilding combat/traversal.
+- Local dev server at `http://127.0.0.1:3000/`
+- Browser scene renders with canvas, HUD bars, FPS counter, Lil Artie placeholder, and visible terrain
+
+**Next coding priorities:**
+1. Build the actual Phase 2 input pass from the existing scaffold.
+2. Make movement feel playable: grounded check, walking/running/jumping validation, and camera framing.
+3. Add visible prototype island objects before expanding combat or quests.
+
+---
+
+## Session: 2026-05-25 — Phase 2 Input System
+
+**Status**: Phase 2 input support is implemented and build-verified.
+
+**Completed:**
+- Moved runtime input ownership to one shared `InputManager`
+- Fixed keyboard just-pressed/just-released tracking
+- Added mouse just-pressed tracking and per-frame camera delta updates
+- Added canvas pointer lock for mouse camera control
+- Cleaned up Xbox/PlayStation mapping selection
+- Added active input device and controller type tracking
+- Connected controller prompt detection to HUD
+
+**Verified:**
+- `npm run type-check`
+- `npm run build`
+- Browser scene reload at `http://127.0.0.1:3000/`
+
+**Remaining risk:**
+- Physical Xbox/PlayStation controller behavior still needs hardware testing.
+
+---
+
+## Session: 2026-05-25 — Phase 3 Player Controller
+
+**Status**: Phase 3 player controller is implemented and build-verified.
+
+**Completed:**
+- Added ray-based grounded checks for the player capsule
+- Added stamina-gated dodge movement
+- Kept run stamina drain tied to movement and grounded state
+- Tuned third-person camera startup framing
+- Synced inventory weapon switching with `WeaponManager`
+- Added player dodge config values
+
+**Verified:**
+- `npm run type-check`
+- `npm run build`
+- Browser scene reload at `http://127.0.0.1:3000/`
+
+**Remaining risk:**
+- Manual keyboard/controller feel testing is still needed for movement tuning.
+
+---
+
+## Session: 2026-05-25 — Phase 4 Traversal
+
+**Status**: Phase 4 traversal is implemented and build-verified.
+
+**Completed:**
+- Integrated climb surface detection into `PlayerMovement`
+- Added ledge grab and pull-up handling
+- Added airborne gliding with stamina drain
+- Added water-zone swimming detection
+- Added run-dodge sliding behavior
+- Added whip swing point detection and attach/release flow
+- Added fall damage based on landing impact velocity
+- Added traversal test geometry to Prototype Island
+
+**Verified:**
+- `npm run type-check`
+- `npm run build`
+- Fresh browser launch at `http://127.0.0.1:3000/`
+
+**Remaining risk:**
+- Traversal feel still needs manual tuning after playtesting.
+
+---
+
+## Session: 2026-05-25 — Phase 5 Weapons
+
+**Status**: Phase 5 weapon prototypes are implemented and build-verified.
+
+**Completed:**
+- Added shared enemy hit detection helpers
+- Exposed enemy metadata for weapon damage
+- Added boomerang throw/return hit flow
+- Added dagger attack and combo hit flow
+- Added whip hit, stun/disarm, and swing anchor raycast flow
+- Kept inventory weapon switching connected to active combat weapon
+
+**Verified:**
+- `npm run type-check`
+- `npm run build`
+- Fresh browser launch at `http://127.0.0.1:3000/`
+
+**Remaining risk:**
+- Weapon range, hit timing, and combat feel need manual playtesting.
+
+---
+
+## Session: 2026-05-25 — Phase 6 Enemy AI
+
+**Status**: Phase 6 enemy AI prototype is implemented and build-verified.
+
+**Completed:**
+- Added player damage callback wiring from enemies through `EnemySpawner`
+- Added enemy health bars and health color feedback
+- Added state color feedback for patrol, alert, chase, attack, search, stunned, and defeated
+- Added stronger hit reaction and stun behavior
+- Added defeated enemy cleanup from spawner and weapon targeting
+- Kept enemy camp spawning active in Prototype Island
+
+**Verified:**
+- `npm run type-check`
+- `npm run build`
+- Fresh browser launch at `http://127.0.0.1:3000/`
+
+**Remaining risk:**
+- Enemy chase/attack balance needs manual playtesting once terrain and camp layout are richer.
+
+---
+
+## Session: 2026-05-25 — Phase 7 World Prototype
+
+**Status**: Phase 7 world prototype is implemented and build-verified.
+
+**Completed:**
+- Added lightweight trees and rocks to Prototype Island
+- Added water test area
+- Added cave entrance placeholder
+- Added enemy camp props
+- Added village test area and huts
+- Added Elder Kwame NPC using existing dialogue data
+- Added asset-slot metadata for future GLB replacement from Meshy, purchased packs, Blender, or PlayCanvas Editor exports
+- Removed unused asset-loader instantiation from procedural environment generation
+
+**Asset style direction:**
+- Stylized 3D adventure
+- Low-to-mid poly models
+- Strong silhouettes and readable shapes
+- Warm jungle/coastal color palette
+- Clean PBR-light materials, not photoreal
+- All imports should be normalized to game scale and exported as GLB/GLTF
+
+**Verified:**
+- `npm run type-check`
+- `npm run build`
+- Browser scene launch at `http://127.0.0.1:3000/`
+- In-browser scene ran around 50 FPS after placeholder optimization
+
+**Remaining risk:**
+- Purchased assets must be checked for license, file format, poly count, texture paths, rig compatibility, and visual fit before import.
+
+---
+
+## Session: 2026-05-25 — Asset Integration Pivot
+
+**Status**: First real-asset slots are wired.
+
+**Completed:**
+- Added optional GLB loading with safe placeholder fallback
+- Added auto-load slots for Lil Artie, boomerang, dagger, and whip
+- Fixed missing GLB paths incorrectly resolving as Vite HTML responses
+- Added `tools/asset-intake.md` with style rules and exact drop-in filenames
+
+**First asset filenames:**
+- `public/assets/models/characters/lil-artie.glb`
+- `public/assets/models/weapons/boomerang.glb`
+- `public/assets/models/weapons/dagger.glb`
+- `public/assets/models/weapons/whip.glb`
+
+**Verified:**
+- `npm run type-check`
+- `npm run build`
+- Browser startup reaches Ready with missing assets using fallback placeholders
+
+---
+
+## Session: 2026-05-25 — Movement Direction Fix
+
+**Status**: Forward/back movement inversion fixed.
+
+**Completed:**
+- Changed keyboard W/up arrow to positive forward movement
+- Inverted gamepad Y axis so left-stick-up maps to positive forward movement
+
+**Verified:**
+- `npm run type-check`
+- `npm run build`

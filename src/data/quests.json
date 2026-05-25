@@ -1,0 +1,65 @@
+[
+  {
+    "id": "find-the-idol",
+    "title": "Find the Golden Idol",
+    "description": "Elder Kwame says the Golden Idol of the Ancestors was stolen by Blackthorn Syndicate mercenaries and hidden somewhere on Prototype Island. Find it and bring it back.",
+    "giverNpcId": "elder-kwame",
+    "objectives": [
+      {
+        "id": "talk-to-elder",
+        "type": "talk",
+        "description": "Speak with Elder Kwame in the village.",
+        "targetId": "elder-kwame",
+        "completed": false
+      },
+      {
+        "id": "clear-camp",
+        "type": "defeat",
+        "description": "Clear the enemy camp (defeat 3 guards).",
+        "targetId": "jungle-camp-alpha",
+        "targetCount": 3,
+        "currentCount": 0,
+        "completed": false
+      },
+      {
+        "id": "collect-idol",
+        "type": "collect",
+        "description": "Collect the Golden Idol from the chest.",
+        "targetId": "chest-1",
+        "completed": false
+      },
+      {
+        "id": "return-to-elder",
+        "type": "talk",
+        "description": "Return the idol to Elder Kwame.",
+        "targetId": "elder-kwame",
+        "completed": false
+      }
+    ],
+    "rewards": [
+      { "type": "item", "id": "ancient-map", "quantity": 1 },
+      { "type": "experience", "id": "xp", "quantity": 200 }
+    ],
+    "status": "inactive"
+  },
+  {
+    "id": "explore-the-cave",
+    "title": "Into the Dark",
+    "description": "A cave entrance has been spotted on the east side of the island. Something valuable may be inside.",
+    "giverNpcId": "elder-kwame",
+    "objectives": [
+      {
+        "id": "enter-cave",
+        "type": "reach",
+        "description": "Find and enter the cave.",
+        "targetId": "cave-entrance-1",
+        "completed": false
+      }
+    ],
+    "rewards": [
+      { "type": "weapon", "id": "sling", "quantity": 1 }
+    ],
+    "status": "inactive",
+    "prerequisiteQuestIds": ["find-the-idol"]
+  }
+]

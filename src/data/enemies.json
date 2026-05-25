@@ -1,0 +1,54 @@
+[
+  {
+    "id": "jungle-guard",
+    "name": "Jungle Guard",
+    "faction": "Blackthorn Syndicate",
+    "description": "Armed mercenary patrolling jungle outposts. Carries a machete and watches for trespassers.",
+    "health": 80,
+    "attackDamage": 15,
+    "patrolSpeed": 2,
+    "chaseSpeed": 6,
+    "detectionRadius": 12,
+    "attackRange": 2,
+    "drops": ["gold-coin", "ration"]
+  },
+  {
+    "id": "camp-commander",
+    "name": "Camp Commander",
+    "faction": "Blackthorn Syndicate",
+    "description": "Tougher than regular guards. Armored vest, charges when alerted.",
+    "health": 180,
+    "attackDamage": 25,
+    "patrolSpeed": 1.5,
+    "chaseSpeed": 5,
+    "detectionRadius": 15,
+    "attackRange": 2.5,
+    "drops": ["commander-key", "gold-pouch"]
+  },
+  {
+    "id": "desert-raider",
+    "name": "Desert Raider",
+    "faction": "Sand Wolves",
+    "description": "Bandit adapted to harsh desert conditions. Uses a short bow at range, switches to knife up close.",
+    "health": 70,
+    "attackDamage": 12,
+    "patrolSpeed": 3,
+    "chaseSpeed": 7,
+    "detectionRadius": 18,
+    "attackRange": 10,
+    "drops": ["arrow", "water-flask"]
+  },
+  {
+    "id": "ruin-looter",
+    "name": "Ruin Looter",
+    "faction": "Freelance",
+    "description": "Treasure hunters who will attack anyone who threatens their find.",
+    "health": 60,
+    "attackDamage": 10,
+    "patrolSpeed": 2.5,
+    "chaseSpeed": 5.5,
+    "detectionRadius": 10,
+    "attackRange": 1.8,
+    "drops": ["ancient-coin", "ration"]
+  }
+]

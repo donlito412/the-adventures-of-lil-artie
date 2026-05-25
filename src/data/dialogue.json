@@ -1,0 +1,55 @@
+[
+  {
+    "id": "elder-kwame-greeting",
+    "npcId": "elder-kwame",
+    "startId": "line-1",
+    "lines": [
+      {
+        "id": "line-1",
+        "speaker": "Elder Kwame",
+        "text": "Artie! Thank the ancestors you are here. Those mercenaries... they took the idol.",
+        "nextId": "line-2"
+      },
+      {
+        "id": "line-2",
+        "speaker": "Elder Kwame",
+        "text": "Their camp is to the north. The idol is locked in one of their chests. Get it back — before they move it off the island.",
+        "choices": [
+          { "label": "I'm on it.", "nextId": "line-3" },
+          { "label": "Tell me more about the idol.", "nextId": "line-info" }
+        ]
+      },
+      {
+        "id": "line-3",
+        "speaker": "Lil Artie",
+        "text": "Don't worry, Elder. I'll bring it home.",
+        "nextId": null
+      },
+      {
+        "id": "line-info",
+        "speaker": "Elder Kwame",
+        "text": "The Golden Idol has been in our family for generations. It holds the memory of our ancestors. Without it... we lose that connection.",
+        "nextId": "line-2"
+      }
+    ]
+  },
+  {
+    "id": "elder-kwame-return",
+    "npcId": "elder-kwame",
+    "startId": "ret-1",
+    "lines": [
+      {
+        "id": "ret-1",
+        "speaker": "Elder Kwame",
+        "text": "You found it! The ancestors smile on you today, Artie.",
+        "nextId": "ret-2"
+      },
+      {
+        "id": "ret-2",
+        "speaker": "Elder Kwame",
+        "text": "Take this map — it shows something I have never told anyone. There is more treasure on this island... and more danger.",
+        "nextId": null
+      }
+    ]
+  }
+]

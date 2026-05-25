@@ -1,0 +1,54 @@
+[
+  {
+    "id": "boomerang",
+    "name": "Boomerang",
+    "description": "A hand-carved hardwood boomerang. Lil Artie's signature weapon — throw it and it always comes back.",
+    "type": "ranged",
+    "damage": 20,
+    "range": 20,
+    "unlocked": true,
+    "icon": "boomerang-icon.png"
+  },
+  {
+    "id": "dagger",
+    "name": "Dagger",
+    "description": "A short, balanced blade for close-quarters combat. Fast combo attacks.",
+    "type": "melee",
+    "damage": 35,
+    "range": 1.5,
+    "unlocked": true,
+    "icon": "dagger-icon.png"
+  },
+  {
+    "id": "whip",
+    "name": "Whip",
+    "description": "A long leather whip. Can disarm enemies, crack targets at range, and latch onto swing points.",
+    "type": "hybrid",
+    "damage": 15,
+    "range": 5,
+    "unlocked": true,
+    "icon": "whip-icon.png"
+  },
+  {
+    "id": "spear",
+    "name": "Spear",
+    "description": "A reach weapon found in the coastal ruins. Unlocked after completing Chapter 2.",
+    "type": "melee",
+    "damage": 45,
+    "range": 3,
+    "unlocked": false,
+    "unlockCondition": "complete-chapter-2",
+    "icon": "spear-icon.png"
+  },
+  {
+    "id": "sling",
+    "name": "Stone Sling",
+    "description": "A simple but deadly ranged tool. Unlimited ammo from gathered river stones.",
+    "type": "ranged",
+    "damage": 12,
+    "range": 30,
+    "unlocked": false,
+    "unlockCondition": "find-sling-in-cave",
+    "icon": "sling-icon.png"
+  }
+]

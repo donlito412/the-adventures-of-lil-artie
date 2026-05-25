@@ -1,0 +1,55 @@
+[
+  {
+    "id": "golden-idol",
+    "name": "Golden Idol of the Ancestors",
+    "description": "A small golden figurine carved in the image of an ancient warrior. Radiates warmth.",
+    "type": "artifact",
+    "model": "models/props/golden-idol.glb",
+    "questRelated": true
+  },
+  {
+    "id": "ancient-map",
+    "name": "Tattered Map",
+    "description": "An old map showing secret locations on the island. Key points are marked in red ink.",
+    "type": "key",
+    "model": "models/props/map.glb",
+    "questRelated": true
+  },
+  {
+    "id": "gold-coin",
+    "name": "Gold Coin",
+    "description": "Standard currency.",
+    "type": "item",
+    "stackable": true
+  },
+  {
+    "id": "ration",
+    "name": "Field Ration",
+    "description": "Restores 20 health when consumed.",
+    "type": "item",
+    "effect": { "stat": "health", "amount": 20 },
+    "stackable": true
+  },
+  {
+    "id": "water-flask",
+    "name": "Water Flask",
+    "description": "Restores 30 stamina when used.",
+    "type": "item",
+    "effect": { "stat": "stamina", "amount": 30 },
+    "stackable": true
+  },
+  {
+    "id": "commander-key",
+    "name": "Commander's Key",
+    "description": "Unlocks the supply room at the enemy camp.",
+    "type": "key",
+    "questRelated": true
+  },
+  {
+    "id": "ancient-coin",
+    "name": "Ancient Coin",
+    "description": "A relic from an old civilization. Worth something to the right buyer.",
+    "type": "artifact",
+    "stackable": true
+  }
+]
