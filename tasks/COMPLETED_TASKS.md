@@ -90,3 +90,4 @@ _Log completed work here. Format: `[DATE] [AGENT] Task description`_
 - [2026-05-25] [CODEX] Removed default PlayCanvas `Box`/`Plane` entities from the live scene
 - [2026-05-25] [CODEX] Reframed the live PlayCanvas launch camera so Lil Artie is visible
 - [2026-05-25] [CODEX] Offset Lil Artie onto the visible snowy terrain mesh in the live PlayCanvas scene
+- [2026-05-25] [CODEX] Corrected the live PlayCanvas spawn/camera again after verification showed Lil Artie still at the terrain edge

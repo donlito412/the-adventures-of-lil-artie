@@ -86,15 +86,16 @@ Notes and observations from the Codex agent (code implementation).
 
 ## Session: 2026-05-25 — Live PlayCanvas Scene Fix
 
-**Status**: Live scene cleanup and placement fixed in PlayCanvas Editor.
+**Status**: Live scene cleanup and terrain placement fixed in PlayCanvas Editor.
 
 **Completed:**
 - Removed the default `Box` and `Plane` entities from the live PlayCanvas hierarchy
 - Corrected the launch camera yaw so it faces Lil Artie
-- Moved Lil Artie from the terrain gap onto the visible snowy terrain mesh
+- Initial placement still left Lil Artie at the terrain edge with most of the launch view showing empty void
+- Moved Lil Artie and the launch camera farther into the snowy terrain mesh so the launch opens on playable terrain
 
 **Verified:**
-- Live PlayCanvas launch shows Lil Artie on the snowy terrain with the default box/plane gone
+- Live PlayCanvas launch shows Lil Artie standing on the snowy terrain with the default box/plane gone
 
 **Remaining risk:**
 - The PlayCanvas account is over disk allowance, so additional asset uploads will fail until space is cleared or the plan is upgraded.
