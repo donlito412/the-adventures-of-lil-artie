@@ -93,3 +93,7 @@ _Log completed work here. Format: `[DATE] [AGENT] Task description`_
 - [2026-05-25] [CODEX] Corrected the live PlayCanvas spawn/camera again after verification showed Lil Artie still at the terrain edge
 - [2026-05-25] [CODEX] Attached live PlayCanvas movement and camera scripts to the real Lil Artie and Camera entities
 - [2026-05-25] [CODEX] Updated art direction to require realistic / stylized-realistic production assets instead of low-poly assets
+- [2026-05-26] [CODEX] Built a local PlayCanvas explorable scene using real local assets from `/Volumes/Lito's Hard Drive/Lito's Games/Wolf Pacc`
+- [2026-05-26] [CODEX] Added real GLB props for oak trees, rocks, cliff, treasure chest, temple pillars, boomerang, dagger, and whip
+- [2026-05-26] [CODEX] Fixed local Lil Artie animation graph setup and scaled the Meshy character to playable size
+- [2026-05-26] [CODEX] Verified the local scene in browser at `http://127.0.0.1:3001/` and verified `npm run build`

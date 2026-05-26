@@ -67,15 +67,16 @@ See `docs/CONTROLLER_SUPPORT.md` for full button mapping.
 
 ## Current Engine Direction
 
-The active game runtime is now PlayCanvas-first.
+The active playable build is the local Vite + PlayCanvas runtime.
 
 Use:
-- PlayCanvas Editor for visual scene building
+- Local `public/assets` for real GLB/GLTF game assets
+- PlayCanvas Editor only when useful for visual layout tests
 - Blender for asset cleanup, rigging, optimization, and GLB export
 - Meshy and purchased assets as source assets
-- Vite/TypeScript for local gameplay code and publishing pipeline
+- Vite/TypeScript for gameplay code and publishing pipeline
 
-The previous Babylon.js prototype files remain in `src/` as inactive reference code during the transition, but TypeScript currently checks only the active PlayCanvas runtime.
+The PlayCanvas cloud editor is not the source of truth because the account storage limit is too small for realistic open-world production assets. The previous Babylon.js prototype files remain in `src/` as inactive reference code during the transition, but TypeScript currently checks only the active PlayCanvas runtime.
 
 ---
 

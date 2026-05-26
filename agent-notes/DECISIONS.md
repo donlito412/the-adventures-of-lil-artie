@@ -106,3 +106,11 @@ Major architectural and design decisions. All agents must read this before start
 **Decision**: Production assets should target a realistic or stylized-realistic premium adventure look. Do not use low-poly assets for sale-ready scenes.
 **Reason**: The game is intended for commercial sale and should present higher visual quality than blockout or prototype art.
 **Impact**: Meshy, purchased, Blender, and PlayCanvas assets must be evaluated for realistic PBR materials, believable scale, and sufficient detail. Low-poly assets are allowed only as temporary collision proxies or distant LODs.
+
+---
+
+## [2026-05-26] Runtime Storage: Local Assets First
+
+**Decision**: Keep the local Vite/PlayCanvas runtime as the primary playable build and load production assets from `public/assets` instead of depending on PlayCanvas cloud storage.
+**Reason**: The PlayCanvas account storage limit is too small for realistic open-world assets, terrain, textures, and animation sets.
+**Impact**: PlayCanvas Editor remains optional for layout tests, but the playable browser scene must run locally from the repo and can later deploy to Vercel/Netlify or another host with enough asset storage.

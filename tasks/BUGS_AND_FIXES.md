@@ -23,6 +23,8 @@ _None._
 - [2026-05-25] [Resolved] Missing GLB asset paths could be mistaken for valid files because Vite returned `index.html` -> Asset availability now rejects HTML responses and safely falls back to placeholders.
 - [2026-05-25] [Resolved] Player/controller forward movement was inverted -> Keyboard forward and gamepad left-stick-up now map to positive forward movement.
 - [2026-05-25] [Resolved] PlayCanvas REST curl calls were sent with an empty bearer value because inline shell assignment expanded too early -> Use a shell variable assigned before the `curl` command.
+- [2026-05-26] [Resolved] Local PlayCanvas Lil Artie fell back to a capsule after loading the animated Meshy GLB because the animation state graph was missing `parameters` -> Added the required graph parameters object and kept the real mesh loaded even if animation setup fails.
+- [2026-05-26] [Resolved] Local Lil Artie rendered at giant scale in the playable scene -> Normalized the Meshy character asset scale to `0.014` in `src/playcanvas/assetManifest.ts`.
 
 ---
 

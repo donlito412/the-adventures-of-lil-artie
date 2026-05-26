@@ -387,3 +387,25 @@ Notes and observations from the Codex agent (code implementation).
 **Verified:**
 - `npm run type-check`
 - `npm run build`
+
+---
+
+## Session: 2026-05-26 — Local Real-Asset Playable Scene
+
+**Status**: Local PlayCanvas scene is rendering with real assets and no PlayCanvas cloud storage dependency.
+
+**Completed:**
+- Copied usable GLB assets from `/Volumes/Lito's Hard Drive/Lito's Games/Wolf Pacc/Assets/Models`.
+- Added real oak tree, rock, cliff, chest, temple pillar, boomerang, dagger, and whip GLBs to `public/assets`.
+- Kept Meshy `lil-artie.glb` as the playable character because it includes an animation clip.
+- Fixed PlayCanvas anim graph setup by adding required `parameters`.
+- Scaled Lil Artie down to playable size.
+- Added camera-relative keyboard/gamepad movement and mouse-drag camera orbit.
+- Added local debug state for player position inspection.
+
+**Verified:**
+- Browser render at `http://127.0.0.1:3001/`.
+- `npm run build`.
+
+**Remaining risk:**
+- Manual held-key/controller testing still needs to be done in the visible browser because the browser automation layer blocked synthetic held input.

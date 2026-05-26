@@ -9,6 +9,7 @@ interface ContainerResource {
 }
 
 interface AnimStateGraph {
+  parameters: Record<string, unknown>;
   layers: {
     name: string;
     states: { name: string; speed?: number; loop?: boolean }[];
@@ -21,13 +22,26 @@ interface AnimComponentExtended {
   assignAnimation(state: string, track: unknown, layer?: string): void;
 }
 
+declare global {
+  interface Window {
+    __lilArtieDebug?: {
+      playerPosition: { x: number; y: number; z: number };
+      hasPlayer: boolean;
+    };
+  }
+}
+
 // ─── PlayCanvasGame ───────────────────────────────────────────────────────────
 
 export class PlayCanvasGame {
   private app!: pc.Application;
   private player!: pc.Entity;
   private camera!: pc.Entity;
+  private playerAnim: pc.AnimComponent | null = null;
   private keys = new Set<string>();
+  private cameraYaw = 0;
+  private cameraPitch = -18;
+  private mouseLookActive = false;
   private fpsCounter: HTMLDivElement | null = null;
   private lastFpsUpdate = 0;
   private frameCount = 0;
@@ -52,6 +66,9 @@ export class PlayCanvasGame {
     window.addEventListener('resize', () => this.app.resizeCanvas());
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
+    this.canvas.addEventListener('pointerdown', this.onPointerDown);
+    window.addEventListener('pointerup', this.onPointerUp);
+    window.addEventListener('pointermove', this.onPointerMove);
 
     this.createFpsCounter();
     this.createLighting();
@@ -71,6 +88,7 @@ export class PlayCanvasGame {
     this.app.on('update', (dt: number) => {
       this.handlePlayerMovement(dt);
       this.updateCamera();
+      this.updateDebugState();
       this.updateFps(dt);
     });
   }
@@ -78,6 +96,9 @@ export class PlayCanvasGame {
   dispose(): void {
     window.removeEventListener('keydown', this.onKeyDown);
     window.removeEventListener('keyup', this.onKeyUp);
+    this.canvas.removeEventListener('pointerdown', this.onPointerDown);
+    window.removeEventListener('pointerup', this.onPointerUp);
+    window.removeEventListener('pointermove', this.onPointerMove);
     this.fpsCounter?.remove();
     this.app.destroy();
   }
@@ -145,9 +166,28 @@ export class PlayCanvasGame {
     }
 
     // Zone orientation markers
-    this.createMarker('asset-drop-zone', new pc.Vec3(-6, 0.15, 5), new pc.Color(0.9, 0.7, 0.2));
-    this.createMarker('enemy-camp-zone', new pc.Vec3(14, 0.15, 10), new pc.Color(0.6, 0.2, 0.12));
-    this.createMarker('village-zone', new pc.Vec3(-14, 0.15, -8), new pc.Color(0.55, 0.38, 0.16));
+    this.createMarker('camp-fire-zone', new pc.Vec3(14, 0.15, 10), new pc.Color(0.6, 0.2, 0.12));
+
+    await this.createExplorationSet();
+  }
+
+  private async createExplorationSet(): Promise<void> {
+    await Promise.all([
+      this.placeGlb(assetSlots.oakTree.path, 'oak-tree-a', new pc.Vec3(-10, 0, -8), 1.8, 0),
+      this.placeGlb(assetSlots.oakTree.path, 'oak-tree-b', new pc.Vec3(11, 0, -12), 1.45, 48),
+      this.placeGlb(assetSlots.oakTree.path, 'oak-tree-c', new pc.Vec3(-18, 0, 12), 1.25, -26),
+      this.placeGlb(assetSlots.rock.path, 'rock-a', new pc.Vec3(6, 0, -5), 1.4, 18),
+      this.placeGlb(assetSlots.rock.path, 'rock-b', new pc.Vec3(-7, 0, 9), 1.1, -42),
+      this.placeGlb(assetSlots.cliff.path, 'cliff-backdrop', new pc.Vec3(22, 0, -18), 2.2, 135),
+      this.placeGlb(assetSlots.treasureChest.path, 'treasure-chest', new pc.Vec3(8, 0, 8), 0.8, 30),
+      this.placeGlb(assetSlots.templePillar.path, 'pillar-a', new pc.Vec3(-3, 0, 14), 1.1, 0),
+      this.placeGlb(assetSlots.templePillar.path, 'pillar-b', new pc.Vec3(2, 0, 15), 1.1, 8),
+      this.placeGlb(assetSlots.boomerang.path, 'boomerang-pickup', new pc.Vec3(-2, 1, 4), 0.55, 30),
+      this.placeGlb(assetSlots.dagger.path, 'dagger-pickup', new pc.Vec3(0, 1, 4), 0.5, -20),
+      this.placeGlb(assetSlots.whip.path, 'whip-pickup', new pc.Vec3(2, 1, 4), 0.55, 12),
+    ]);
+
+    this.createWater();
   }
 
   private createMarker(name: string, position: pc.Vec3, color: pc.Color): void {
@@ -191,19 +231,23 @@ export class PlayCanvasGame {
         });
         entity.name = 'lil-artie';
         entity.setLocalScale(slot.scale, slot.scale, slot.scale);
-        // Spawn slightly above ground to clear terrain surface
-        entity.setPosition(0, 2, 0);
-        this.app.root.addChild(entity);
+        entity.setPosition(0, 1, 0);
 
         // ── Wire the animation system ──────────────────────────────────────
         const animAssets = container.animations ?? [];
         if (animAssets.length > 0) {
-          this.setupAnim(entity, animAssets);
+          try {
+            this.setupAnim(entity, animAssets);
+          } catch (animError) {
+            console.warn('[Player] Animation setup failed; keeping character mesh loaded:', animError);
+          }
         } else {
           console.warn('[Player] Character GLB has no embedded animations — T-pose will show.');
         }
 
+        this.app.root.addChild(entity);
         this.player = entity;
+        this.setAnimationMoving(false);
         console.log('[Player] Lil Artie loaded', animAssets.length > 0 ? 'with animations.' : '(no animations).');
         resolve();
       });
@@ -218,6 +262,7 @@ export class PlayCanvasGame {
     entity.addComponent('anim', { activate: true });
 
     const stateGraph: AnimStateGraph = {
+      parameters: {},
       layers: [
         {
           name: 'Base Layer',
@@ -237,6 +282,7 @@ export class PlayCanvasGame {
     animComp.loadStateGraph(stateGraph);
     // Assign the first clip (walking animation) to the locomotion state
     animComp.assignAnimation('locomotion', animAssets[0].resource, 'Base Layer');
+    this.playerAnim = entity.anim ?? null;
 
     console.log(`[Player] Animation assigned: "${animAssets[0].name}"`);
   }
@@ -261,35 +307,42 @@ export class PlayCanvasGame {
     if (!this.player) return;
 
     const speed = this.keys.has('ShiftLeft') || this.keys.has('ShiftRight') ? 7 : 4;
-    const move = new pc.Vec3();
+    const input = new pc.Vec2();
 
-    if (this.keys.has('KeyW') || this.keys.has('ArrowUp')) move.z -= 1;
-    if (this.keys.has('KeyS') || this.keys.has('ArrowDown')) move.z += 1;
-    if (this.keys.has('KeyA') || this.keys.has('ArrowLeft')) move.x -= 1;
-    if (this.keys.has('KeyD') || this.keys.has('ArrowRight')) move.x += 1;
+    if (this.keys.has('KeyW') || this.keys.has('ArrowUp')) input.y += 1;
+    if (this.keys.has('KeyS') || this.keys.has('ArrowDown')) input.y -= 1;
+    if (this.keys.has('KeyA') || this.keys.has('ArrowLeft')) input.x -= 1;
+    if (this.keys.has('KeyD') || this.keys.has('ArrowRight')) input.x += 1;
 
     // Gamepad left stick
     const pads = navigator.getGamepads?.() ?? [];
     const pad = Array.from(pads).find(Boolean);
     if (pad) {
-      const ax = Math.abs(pad.axes[0] ?? 0) > 0.15 ? (pad.axes[0] ?? 0) : 0;
-      const ay = Math.abs(pad.axes[1] ?? 0) > 0.15 ? (pad.axes[1] ?? 0) : 0;
-      move.x += ax;
-      move.z += ay;
+      const ax = Math.abs(pad.axes[0] ?? 0) > 0.25 ? (pad.axes[0] ?? 0) : 0;
+      const ay = Math.abs(pad.axes[1] ?? 0) > 0.25 ? (pad.axes[1] ?? 0) : 0;
+      input.x += ax;
+      input.y += -ay;
     }
 
-    if (move.lengthSq() > 0.0001) {
+    const hasMovement = input.lengthSq() > 0.04;
+    this.setAnimationMoving(hasMovement);
+    if (hasMovement) {
+      input.normalize();
+
+      const yaw = this.cameraYaw * pc.math.DEG_TO_RAD;
+      const forward = new pc.Vec3(Math.sin(yaw), 0, Math.cos(yaw));
+      const right = new pc.Vec3(Math.cos(yaw), 0, -Math.sin(yaw));
+      const move = right.mulScalar(input.x).add(forward.mulScalar(input.y));
       move.normalize().mulScalar(speed * dt);
-      this.player.translate(move);
-      this.player.lookAt(
-        this.player.getPosition().clone().add(new pc.Vec3(move.x, 0, move.z)),
-      );
+
+      const next = this.player.getPosition().clone().add(move);
+      this.player.setPosition(next.x, Math.max(next.y, 1), next.z);
+      this.player.lookAt(next.clone().add(new pc.Vec3(move.x, 0, move.z)));
     }
 
-    // Basic ground clamp — keeps player at or above y = 0
     const pos = this.player.getPosition();
-    if (pos.y < 0) {
-      this.player.setPosition(pos.x, 0, pos.z);
+    if (pos.y < 1) {
+      this.player.setPosition(pos.x, 1, pos.z);
     }
   }
 
@@ -298,7 +351,15 @@ export class PlayCanvasGame {
   private updateCamera(): void {
     if (!this.player || !this.camera) return;
     const playerPos = this.player.getPosition();
-    this.camera.setPosition(playerPos.clone().add(new pc.Vec3(0, 5, 9)));
+    const yaw = this.cameraYaw * pc.math.DEG_TO_RAD;
+    const pitch = this.cameraPitch * pc.math.DEG_TO_RAD;
+    const distance = 9;
+    const offset = new pc.Vec3(
+      Math.sin(yaw) * Math.cos(pitch) * -distance,
+      4.8 + Math.sin(pitch) * distance,
+      Math.cos(yaw) * Math.cos(pitch) * -distance,
+    );
+    this.camera.setPosition(playerPos.clone().add(offset));
     this.camera.lookAt(playerPos.clone().add(new pc.Vec3(0, 1.2, 0)));
   }
 
@@ -333,6 +394,76 @@ export class PlayCanvasGame {
         });
       });
     });
+  }
+
+  private async placeGlb(
+    path: string,
+    name: string,
+    position: pc.Vec3,
+    scale: number,
+    yaw: number,
+  ): Promise<pc.Entity | null> {
+    const entity = await this.loadEntity(path, name, position, scale);
+    if (entity) entity.setEulerAngles(0, yaw, 0);
+    return entity;
+  }
+
+  private loadEntity(path: string, name: string, position: pc.Vec3, scale: number): Promise<pc.Entity | null> {
+    return this.assetExists(path).then((available) => {
+      if (!available) return null;
+
+      return new Promise<pc.Entity | null>((resolve) => {
+        this.app.assets.loadFromUrl(path, 'container', (err, asset) => {
+          if (err || !asset?.resource) {
+            console.warn(`[World] Failed to load ${name}:`, err);
+            resolve(null);
+            return;
+          }
+
+          const container = asset.resource as ContainerResource;
+          const entity = container.instantiateRenderEntity({ castShadows: true, receiveShadows: true });
+          entity.name = name;
+          entity.setPosition(position);
+          entity.setLocalScale(scale, scale, scale);
+          this.app.root.addChild(entity);
+          resolve(entity);
+        });
+      });
+    });
+  }
+
+  private createWater(): void {
+    const water = new pc.Entity('coastal-water');
+    water.addComponent('render', { type: 'box' });
+    water.setLocalScale(80, 0.05, 34);
+    water.setPosition(0, -0.03, 32);
+    this.app.root.addChild(water);
+
+    const mat = new pc.StandardMaterial();
+    mat.diffuse = new pc.Color(0.05, 0.28, 0.42);
+    mat.emissive = new pc.Color(0.02, 0.08, 0.1);
+    mat.opacity = 0.72;
+    mat.blendType = pc.BLEND_NORMAL;
+    mat.update();
+    water.render!.material = mat;
+  }
+
+  private setAnimationMoving(moving: boolean): void {
+    if (!this.playerAnim) return;
+    this.playerAnim.speed = moving ? 1 : 0;
+  }
+
+  private updateDebugState(): void {
+    if (!this.player) {
+      window.__lilArtieDebug = { hasPlayer: false, playerPosition: { x: 0, y: 0, z: 0 } };
+      return;
+    }
+
+    const pos = this.player.getPosition();
+    window.__lilArtieDebug = {
+      hasPlayer: true,
+      playerPosition: { x: pos.x, y: pos.y, z: pos.z },
+    };
   }
 
   /** HEAD-check that rejects Vite's 404 → index.html fallback responses. */
@@ -378,4 +509,11 @@ export class PlayCanvasGame {
 
   private onKeyDown = (e: KeyboardEvent): void => { this.keys.add(e.code); };
   private onKeyUp = (e: KeyboardEvent): void => { this.keys.delete(e.code); };
+  private onPointerDown = (): void => { this.mouseLookActive = true; };
+  private onPointerUp = (): void => { this.mouseLookActive = false; };
+  private onPointerMove = (e: PointerEvent): void => {
+    if (!this.mouseLookActive) return;
+    this.cameraYaw -= e.movementX * 0.2;
+    this.cameraPitch = pc.math.clamp(this.cameraPitch - e.movementY * 0.12, -42, -8);
+  };
 }
