@@ -87,3 +87,6 @@ _Log completed work here. Format: `[DATE] [AGENT] Task description`_
 - [2026-05-25] [CODEX] Placed uploaded terrain model into the PlayCanvas Editor scene hierarchy as `REAL_TERRAIN__snowy_mountain_terrain`
 - [2026-05-25] [CODEX] Added Meshy skinned character GLB to the active Lil Artie character asset slot
 - [2026-05-25] [CODEX] Uploaded Lil Artie Meshy GLB to PlayCanvas and placed it in the Editor scene as `REAL_LIL_ARTIE__meshy_character`
+- [2026-05-25] [CODEX] Removed default PlayCanvas `Box`/`Plane` entities from the live scene
+- [2026-05-25] [CODEX] Reframed the live PlayCanvas launch camera so Lil Artie is visible
+- [2026-05-25] [CODEX] Offset Lil Artie onto the visible snowy terrain mesh in the live PlayCanvas scene
