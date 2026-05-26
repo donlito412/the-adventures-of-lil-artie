@@ -91,3 +91,5 @@ _Log completed work here. Format: `[DATE] [AGENT] Task description`_
 - [2026-05-25] [CODEX] Reframed the live PlayCanvas launch camera so Lil Artie is visible
 - [2026-05-25] [CODEX] Offset Lil Artie onto the visible snowy terrain mesh in the live PlayCanvas scene
 - [2026-05-25] [CODEX] Corrected the live PlayCanvas spawn/camera again after verification showed Lil Artie still at the terrain edge
+- [2026-05-25] [CODEX] Attached live PlayCanvas movement and camera scripts to the real Lil Artie and Camera entities
+- [2026-05-25] [CODEX] Updated art direction to require realistic / stylized-realistic production assets instead of low-poly assets

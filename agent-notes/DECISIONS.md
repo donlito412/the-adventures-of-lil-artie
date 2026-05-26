@@ -98,3 +98,11 @@ Major architectural and design decisions. All agents must read this before start
 **Decision**: Use PlayCanvas REST API for repeatable uploads/build automation and the PlayCanvas Editor/API for scene hierarchy work.
 **Reason**: REST API is stable for script/json asset uploads and project queries. Scene layout still benefits from the browser editor.
 **Impact**: Editor-ready assets now live in `public/playcanvas/` and are uploaded to PlayCanvas project `1533403` on branch `main`.
+
+---
+
+## [2026-05-25] Art Direction: Realistic / Stylized-Realistic, Not Low-Poly
+
+**Decision**: Production assets should target a realistic or stylized-realistic premium adventure look. Do not use low-poly assets for sale-ready scenes.
+**Reason**: The game is intended for commercial sale and should present higher visual quality than blockout or prototype art.
+**Impact**: Meshy, purchased, Blender, and PlayCanvas assets must be evaluated for realistic PBR materials, believable scale, and sufficient detail. Low-poly assets are allowed only as temporary collision proxies or distant LODs.

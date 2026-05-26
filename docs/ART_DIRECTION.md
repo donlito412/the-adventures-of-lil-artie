@@ -5,7 +5,7 @@
 
 ## Visual Identity
 
-The game should look like a **high-quality animated feature film** in real-time 3D. Think vivid colors, strong silhouettes, stylized realism (not photorealistic, not cartoon).
+The game should target a **realistic / stylized-realistic premium adventure look** in real-time 3D. Assets should use believable materials, PBR textures, natural lighting, and detailed silhouettes. Do not use low-poly, blockout, or toy-like assets for production scenes.
 
 References (mood, not copied):
 - Lush jungle environments — dense greens, filtered light
@@ -91,9 +91,17 @@ References (mood, not copied):
 
 | Type | Format | Target Triangles | Texture |
 |---|---|---|---|
-| Main character | GLB | 8,000-12,000 tris | 2K PBR |
-| NPCs | GLB | 4,000-8,000 tris | 1K PBR |
-| Enemies | GLB | 4,000-8,000 tris | 1K PBR |
-| Props (small) | GLB | 200-1,000 tris | 512 atlas |
-| Environment (large) | GLB | Up to 30,000 tris | 2K PBR |
+| Main character | GLB | 15,000-35,000 tris | 2K-4K PBR |
+| NPCs | GLB | 10,000-25,000 tris | 2K PBR |
+| Enemies | GLB | 10,000-25,000 tris | 2K PBR |
+| Props (small) | GLB | 500-5,000 tris | 1K-2K PBR |
+| Environment (large) | GLB | Up to 75,000 tris per streamed section | 2K-4K PBR |
 | Terrain | Procedural/Heightmap | N/A | 2K tiling |
+
+## Production Quality Bar
+
+- No low-poly production assets.
+- Use realistic terrain, realistic foliage, and believable human-scale props.
+- Prefer GLB/GLTF assets with PBR materials: base color, normal, roughness, metallic/AO when available.
+- Use lower detail only for far background LODs or temporary collision proxies.
+- Any placeholder/blockout object must be replaced before a sale-ready build.
