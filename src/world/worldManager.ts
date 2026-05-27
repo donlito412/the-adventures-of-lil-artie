@@ -153,13 +153,6 @@ export class PrototypeIslandScene {
       collider?: { size: Vector3; centerOffset: Vector3; shape?: PhysicsShapeType };
     }> = [
       {
-        path: '/assets/models/environment/realistic-oak-tree.glb',
-        name: 'real-oak-tree-main',
-        position: new Vector3(6, 0, 7),
-        scaling: new Vector3(2.6, 2.6, 2.6),
-        collider: { size: new Vector3(0.8, 4, 0.8), centerOffset: new Vector3(0, 2, 0), shape: PhysicsShapeType.CYLINDER },
-      },
-      {
         path: '/assets/models/environment/realistic-rock.glb',
         name: 'real-rock-climb-base',
         position: new Vector3(-9, 0, 7),

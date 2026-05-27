@@ -87,9 +87,9 @@ Major architectural and design decisions. All agents must read this before start
 
 ## [2026-05-25] Art Direction: Realistic / Stylized-Realistic, Not Low-Poly
 
-**Decision**: Production assets should target a realistic or stylized-realistic premium adventure look. Do not use low-poly assets for sale-ready scenes.
+**Decision**: Production assets should target a realistic premium adventure look. Do not use low-poly or stylized assets for sale-ready scenes.
 **Reason**: The game is intended for commercial sale and should present higher visual quality than blockout or prototype art.
-**Impact**: Meshy, purchased, Blender, and Babylon-ready GLB assets must be evaluated for realistic PBR materials, believable scale, and sufficient detail. Low-poly assets are allowed only as temporary collision proxies or distant LODs.
+**Impact**: Meshy, purchased, Blender, and Babylon-ready GLB assets must be evaluated for realistic PBR materials, believable scale, and sufficient detail. Low-poly meshes are allowed only as invisible collision proxies or distant LODs.
 
 ---
 
@@ -106,3 +106,11 @@ Major architectural and design decisions. All agents must read this before start
 **Decision**: Use a lightweight Babylon heightfield generated from `public/assets/terrain_dristibute_gn.glb` for the playable level.
 **Reason**: The raw 352 MB terrain GLB crashed the browser when loaded directly.
 **Impact**: The source terrain asset remains in `public/assets/terrain_dristibute_gn.glb`; runtime terrain data lives in `src/data/terrainHeightmap.json` and `public/maps/prototype-island/terrain-heightmap.json`.
+
+---
+
+## [2026-05-27] Character Asset Cleanup
+
+**Decision**: Remove the current bundled Lil Artie and reused character GLBs from the active project.
+**Reason**: They displayed as wrong T-pose/duplicate characters, and the final Lil Artie character will be supplied separately.
+**Impact**: Player, NPC, and enemy systems keep invisible controller/collision meshes only until final character assets are added.

@@ -2,12 +2,9 @@
 
 ## Usable Now
 
-- Lil Artie playable character: `public/assets/models/characters/lil-artie.glb`
-- Lil Artie animation source files: `public/Meshy_AI_Explorer's_Journey_biped/`
 - Terrain source: `public/assets/terrain_dristibute_gn.glb`
 - Browser-playable terrain heightfield: `src/data/terrainHeightmap.json`
 - Smaller terrain GLB fallback: `public/assets/models/snowy_mountain_terrain__optimized_mesh.glb`
-- Realistic tree: `public/assets/models/environment/realistic-oak-tree.glb`
 - Realistic rock: `public/assets/models/environment/realistic-rock.glb`
 - Realistic cliff: `public/assets/models/environment/realistic-cliff.glb`
 - Temple pillar: `public/assets/models/props/temple-pillar.glb`
@@ -18,8 +15,10 @@
 
 ## Needs Replacement Or Purchase
 
+- Final Lil Artie character model
 - Distinct human enemy models
 - Distinct NPC models
+- Realistic tree and jungle foliage kit
 - Jungle village building kit
 - Enemy camp kit
 - Cave entrance kit

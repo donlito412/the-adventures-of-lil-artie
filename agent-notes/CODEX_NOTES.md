@@ -33,6 +33,19 @@
 
 ---
 
+## Session: 2026-05-27 — Character Cleanup + Realistic Source Search
+
+**Status**: Wrong character models removed from active runtime.
+
+**Completed:**
+- Removed tracked bundled `lil-artie.glb` and `realistic-artie.glb`.
+- Disabled player, NPC, and enemy character model auto-loading.
+- Kept invisible controller/collision meshes so movement, camera, combat, and interactions still have runtime anchors.
+- Removed stylized tree asset from the active level and tracked assets.
+- Added realistic environment source shortlist in `docs/REALISTIC_ENVIRONMENT_ASSET_SOURCES.md`.
+
+---
+
 Notes and observations from the Codex agent (code implementation).
 
 ---

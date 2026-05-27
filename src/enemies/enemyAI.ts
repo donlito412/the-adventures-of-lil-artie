@@ -4,7 +4,6 @@
 
 import { Vector3, Scene, Mesh, MeshBuilder, StandardMaterial, Color3 } from '@babylonjs/core';
 import { EnemyBase, EnemyConfig } from './enemyBase';
-import { AssetLoader } from '../core/assetLoader';
 import { Debug } from '../utils/debug';
 
 export class HumanEnemy extends EnemyBase {
@@ -37,6 +36,7 @@ export class HumanEnemy extends EnemyBase {
     this.bodyMaterial.diffuseColor = new Color3(0.5, 0.3, 0.2);
     this.mesh.material = this.bodyMaterial;
     this.mesh.metadata = { enemy: this, enemyId: this.config.id };
+    this.mesh.visibility = 0;
 
     this.healthBack = MeshBuilder.CreateBox(`enemy-health-bg-${this.config.id}`, {
       width: 0.9,
@@ -59,23 +59,6 @@ export class HumanEnemy extends EnemyBase {
     const fillMat = new StandardMaterial(`enemy-health-fill-mat-${this.config.id}`, this.scene);
     fillMat.diffuseColor = new Color3(0.1, 0.8, 0.18);
     this.healthFill.material = fillMat;
-
-    void this.attachGuardModel();
-  }
-
-  private async attachGuardModel(): Promise<void> {
-    const model = await new AssetLoader(this.scene).loadModelIfAvailable('/assets/models/characters/realistic-artie.glb', `guard-model-${this.config.id}`);
-    if (!model) return;
-
-    for (const mesh of model.meshes) {
-      mesh.setEnabled(true);
-      mesh.isPickable = false;
-    }
-
-    model.rootMesh.parent = this.mesh;
-    model.rootMesh.position = new Vector3(0, 0.95, 0);
-    model.rootMesh.scaling = new Vector3(1, 1, 1);
-    this.mesh.visibility = 0;
   }
 
   update(deltaTime: number, playerPosition: Vector3): void {

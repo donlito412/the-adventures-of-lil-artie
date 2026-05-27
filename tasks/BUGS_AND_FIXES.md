@@ -21,6 +21,7 @@ _None._
 - [2026-05-26] [Resolved] Player could move from controller stick drift -> Increased gamepad deadzone and ignored small gamepad movement/camera axes.
 - [2026-05-26] [Resolved] Lil Artie walked in place at idle -> Paused the embedded locomotion animation unless movement state is walking or running.
 - [2026-05-26] [Resolved] Raw 352 MB terrain GLB crashed the browser -> Extracted a lightweight heightfield from the real terrain geometry for the playable level.
+- [2026-05-27] [Resolved] Wrong Lil Artie and reused character models appeared in T-pose/duplicates -> Removed bundled player character GLBs and disabled reused character model loading for player, NPC, and enemy.
 
 ---
 

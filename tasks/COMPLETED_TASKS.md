@@ -89,3 +89,7 @@ _Log completed work here. Format: `[DATE] [AGENT] Task description`_
 - [2026-05-26] [CODEX] Replaced visible blockout dressing with confirmed real GLB assets where available
 - [2026-05-26] [CODEX] Generated a browser-playable terrain heightfield from the large real terrain GLB source
 - [2026-05-26] [CODEX] Created `docs/ASSET_INVENTORY.md` documenting usable assets and missing production assets
+- [2026-05-27] [CODEX] Removed bundled Lil Artie and reused character GLBs from the active project
+- [2026-05-27] [CODEX] Disabled wrong character model loading for player, NPC, and enemy until final character assets are provided
+- [2026-05-27] [CODEX] Removed stylized tree asset from active level usage and tracked assets
+- [2026-05-27] [CODEX] Added `docs/REALISTIC_ENVIRONMENT_ASSET_SOURCES.md` with realistic GitHub/source candidates

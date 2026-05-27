@@ -63,7 +63,6 @@ export const GameConfig = {
   SHOW_PHYSICS_COLLIDERS: false,
 
   // Real asset slots
-  LIL_ARTIE_MODEL: '/assets/models/characters/lil-artie.glb',
   BOOMERANG_MODEL: '/assets/models/weapons/boomerang.glb',
   DAGGER_MODEL: '/assets/models/weapons/dagger.glb',
   WHIP_MODEL: '/assets/models/weapons/whip.glb',

@@ -3,7 +3,7 @@
  * Coordinates movement, camera, combat, inventory, and stats.
  */
 
-import { AnimationGroup, Scene, MeshBuilder, Mesh, Vector3, Color3, StandardMaterial } from '@babylonjs/core';
+import { Scene, MeshBuilder, Mesh, Vector3 } from '@babylonjs/core';
 import { InputManager } from '../input/inputManager';
 import { PlayerMovement } from './playerMovement';
 import { PlayerCamera } from './playerCamera';
@@ -13,8 +13,6 @@ import { PlayerInventory } from './playerInventory';
 import { PlayerCombat } from './playerCombat';
 import { WeaponManager } from '../weapons/weaponManager';
 import { SaveSystem } from '../core/saveSystem';
-import { AssetLoader } from '../core/assetLoader';
-import { GameConfig } from '../core/config';
 import { Debug } from '../utils/debug';
 
 export class PlayerController {
@@ -29,8 +27,6 @@ export class PlayerController {
   private camera!: PlayerCamera;
   private combat!: PlayerCombat;
   private weaponManager!: WeaponManager;
-  private locomotionAnimation?: AnimationGroup;
-  private activeAnimationState: 'idle' | 'walk' | 'run' = 'idle';
 
   private deltaTime: number = 0;
 
@@ -42,9 +38,7 @@ export class PlayerController {
   async init(): Promise<void> {
     Debug.log('PlayerController', 'Initializing Lil Artie...');
 
-    // Create placeholder mesh (capsule) until real model is loaded
-    this.mesh = this.createPlaceholderMesh();
-    await this.attachLilArtieModel();
+    this.mesh = this.createControllerMesh();
 
     // Stats & stamina
     this.stats = new PlayerStats();
@@ -86,7 +80,6 @@ export class PlayerController {
     this.movement.update(deltaTime, this.camera.yaw);
     this.camera.update(deltaTime);
     this.combat.update(deltaTime);
-    this.updateCharacterAnimation();
 
     // Weapon switching
     if (this.input.wasJustPressed('weaponNext')) this.inventory.nextWeapon();
@@ -94,7 +87,7 @@ export class PlayerController {
     this.weaponManager.update(deltaTime, this.mesh.position);
   }
 
-  private createPlaceholderMesh(): Mesh {
+  private createControllerMesh(): Mesh {
     const capsule = MeshBuilder.CreateCapsule('lilArtie', {
       height: 1.8,
       radius: 0.4,
@@ -102,56 +95,9 @@ export class PlayerController {
     }, this.scene);
 
     capsule.position = new Vector3(0, 2, 0);
-
-    const mat = new StandardMaterial('artie-mat', this.scene);
-    mat.diffuseColor = new Color3(0.3, 0.2, 0.15);  // brown skin tone placeholder
-    capsule.material = mat;
+    capsule.visibility = 0;
 
     return capsule;
-  }
-
-  private async attachLilArtieModel(): Promise<void> {
-    const loader = new AssetLoader(this.scene);
-    const model = await loader.loadModelIfAvailable(GameConfig.LIL_ARTIE_MODEL, 'lil-artie-model');
-    if (!model) return;
-
-    for (const mesh of model.meshes) {
-      mesh.setEnabled(true);
-      mesh.isPickable = false;
-    }
-
-    model.rootMesh.parent = this.mesh;
-    model.rootMesh.position = Vector3.Zero();
-    model.rootMesh.scaling = new Vector3(1, 1, 1);
-    for (const group of model.animationGroups) {
-      group.stop();
-      group.goToFrame(0);
-    }
-    this.locomotionAnimation = model.animationGroups[0];
-    this.mesh.visibility = 0;
-    Debug.log('PlayerController', 'Loaded real Lil Artie GLB asset.');
-  }
-
-  private updateCharacterAnimation(): void {
-    if (!this.locomotionAnimation) return;
-
-    const movementState = this.movement.movementState;
-    const nextState = movementState === 'running'
-      ? 'run'
-      : movementState === 'walking'
-        ? 'walk'
-        : 'idle';
-
-    if (nextState === this.activeAnimationState) return;
-    this.activeAnimationState = nextState;
-
-    if (nextState === 'idle') {
-      this.locomotionAnimation.pause();
-      return;
-    }
-
-    this.locomotionAnimation.speedRatio = nextState === 'run' ? 1.45 : 1;
-    this.locomotionAnimation.play(true);
   }
 
   get playerMesh(): Mesh {
