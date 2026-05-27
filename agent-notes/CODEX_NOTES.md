@@ -16,6 +16,23 @@
 
 ---
 
+## Session: 2026-05-26 — Real Asset Playable Level Pass
+
+**Status**: Babylon scene uses confirmed local assets instead of visible blockout dressing.
+
+**Completed:**
+- Fixed third-person camera-relative movement yaw.
+- Increased gamepad deadzones so controller drift does not move the player at idle.
+- Paused Lil Artie's embedded walking animation while idle.
+- Loaded real GLB assets for terrain-derived level mesh, tree, rock, cliff, pillar, treasure chest, weapons, player, NPC, and one human enemy.
+- Converted the oversized `terrain_dristibute_gn.glb` source into a lightweight heightfield JSON because loading the raw 352 MB GLB crashed the browser.
+- Added `docs/ASSET_INVENTORY.md`.
+
+**Needs assets:**
+- Distinct human enemy models, distinct NPC models, jungle village/camp kit, cave entrance kit, optimized terrain material set, and final matched animation set.
+
+---
+
 Notes and observations from the Codex agent (code implementation).
 
 ---

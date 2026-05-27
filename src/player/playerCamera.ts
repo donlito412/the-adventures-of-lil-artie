@@ -59,7 +59,7 @@ export class PlayerCamera {
   }
 
   get yaw(): number {
-    return -this.camera.alpha - Math.PI / 2;
+    return this.camera.alpha + Math.PI / 2;
   }
 
   get babylonCamera(): ArcRotateCamera {

@@ -22,7 +22,7 @@ export class GamepadInput {
   private _wasRecentlyUsed = false;
   private recentUseTimer = 0;
 
-  private readonly STICK_DEADZONE = 0.15;
+  private readonly STICK_DEADZONE = 0.28;
 
   private onGamepadConnected = (e: GamepadEvent) => {
     this.gamepad = e.gamepad;

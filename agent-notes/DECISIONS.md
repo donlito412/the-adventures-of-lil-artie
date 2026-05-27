@@ -98,3 +98,11 @@ Major architectural and design decisions. All agents must read this before start
 **Decision**: Revert the active runtime, tasks, and documentation back to Babylon.js.
 **Reason**: PlayCanvas cloud storage limits and workflow friction made it a poor fit for the current production direction.
 **Impact**: `src/game.ts` uses the Babylon engine, input manager, and scene manager again. PlayCanvas runtime and Editor automation files are removed from the active repo.
+
+---
+
+## [2026-05-26] Terrain Runtime: Heightfield From Real Source
+
+**Decision**: Use a lightweight Babylon heightfield generated from `public/assets/terrain_dristibute_gn.glb` for the playable level.
+**Reason**: The raw 352 MB terrain GLB crashed the browser when loaded directly.
+**Impact**: The source terrain asset remains in `public/assets/terrain_dristibute_gn.glb`; runtime terrain data lives in `src/data/terrainHeightmap.json` and `public/maps/prototype-island/terrain-heightmap.json`.

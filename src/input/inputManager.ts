@@ -65,7 +65,7 @@ export class InputManager {
     const gpAxes = this.gamepad.axes;
     const kbAxes = this.keyboard.getMovementAxes();
 
-    if (gp && (Math.abs(gpAxes.moveX) > 0.1 || Math.abs(gpAxes.moveY) > 0.1)) {
+    if (gp && (Math.abs(gpAxes.moveX) > 0.2 || Math.abs(gpAxes.moveY) > 0.2)) {
       this._axes.moveX = gpAxes.moveX;
       this._axes.moveY = gpAxes.moveY;
     } else {
@@ -73,8 +73,8 @@ export class InputManager {
       this._axes.moveY = kbAxes.y;
     }
 
-    this._axes.cameraX = gp ? gpAxes.cameraX : this.mouse.deltaX;
-    this._axes.cameraY = gp ? gpAxes.cameraY : this.mouse.deltaY;
+    this._axes.cameraX = gp && Math.abs(gpAxes.cameraX) > 0.2 ? gpAxes.cameraX : this.mouse.deltaX;
+    this._axes.cameraY = gp && Math.abs(gpAxes.cameraY) > 0.2 ? gpAxes.cameraY : this.mouse.deltaY;
 
     if (gp && this.gamepad.wasRecentlyUsed) {
       this.lastInputDevice = 'gamepad';

@@ -80,3 +80,12 @@ _Log completed work here. Format: `[DATE] [AGENT] Task description`_
 - [2026-05-26] [CODEX] Removed PlayCanvas runtime and Editor automation files from the active repo
 - [2026-05-26] [CODEX] Updated README, tasks, tools, and decision log back to Babylon.js direction
 - [2026-05-26] [CODEX] Added local Havok WASM serving for Babylon physics and verified the browser scene at http://127.0.0.1:3002/
+
+## Real Asset Level Pass
+
+- [2026-05-26] [CODEX] Fixed camera-relative movement yaw so movement direction matches camera direction
+- [2026-05-26] [CODEX] Increased controller stick deadzones and action thresholds to prevent idle drift
+- [2026-05-26] [CODEX] Stopped Lil Artie walking animation from playing while idle
+- [2026-05-26] [CODEX] Replaced visible blockout dressing with confirmed real GLB assets where available
+- [2026-05-26] [CODEX] Generated a browser-playable terrain heightfield from the large real terrain GLB source
+- [2026-05-26] [CODEX] Created `docs/ASSET_INVENTORY.md` documenting usable assets and missing production assets

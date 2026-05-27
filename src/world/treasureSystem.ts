@@ -3,6 +3,7 @@
  */
 
 import { Scene, Mesh, MeshBuilder, Vector3, Color3, StandardMaterial } from '@babylonjs/core';
+import { AssetLoader } from '../core/assetLoader';
 import { Debug } from '../utils/debug';
 
 export interface TreasureChest {
@@ -31,12 +32,28 @@ export class TreasureSystem {
     const mat = new StandardMaterial(`chest-mat-${id}`, this.scene);
     mat.diffuseColor = new Color3(0.6, 0.4, 0.1);
     mesh.material = mat;
+    void this.attachChestModel(mesh, id);
 
     const chest: TreasureChest = { id, position, contents, isOpened: false, mesh };
     this.chests.set(id, chest);
 
     Debug.log('TreasureSystem', `Placed chest: ${id} at ${position}`);
     return chest;
+  }
+
+  private async attachChestModel(parent: Mesh, id: string): Promise<void> {
+    const model = await new AssetLoader(this.scene).loadModelIfAvailable('/assets/models/props/treasure-chest.glb', `treasure-chest-model-${id}`);
+    if (!model) return;
+
+    for (const mesh of model.meshes) {
+      mesh.setEnabled(true);
+      mesh.isPickable = false;
+    }
+
+    model.rootMesh.parent = parent;
+    model.rootMesh.position = new Vector3(0, -0.25, 0);
+    model.rootMesh.scaling = new Vector3(1.2, 1.2, 1.2);
+    parent.visibility = 0;
   }
 
   openChest(id: string): string | null {

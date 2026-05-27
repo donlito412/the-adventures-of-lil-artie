@@ -4,9 +4,10 @@
 
 import {
   Scene, AbstractEngine, HemisphericLight, DirectionalLight, Vector3, Color3,
-  MeshBuilder, StandardMaterial, Texture, Color4, Mesh,
+  MeshBuilder, StandardMaterial, Color4, Mesh,
 } from '@babylonjs/core';
 import { PhysicsAggregate, PhysicsShapeType, PhysicsSystem } from '../core/physics';
+import { AssetLoader } from '../core/assetLoader';
 import { InputManager } from '../input/inputManager';
 import { PlayerController } from '../player/playerController';
 import { EnemySpawner } from '../enemies/enemySpawner';
@@ -15,8 +16,8 @@ import { QuestManager } from '../quests/questManager';
 import { HUD } from '../ui/hud';
 import { AudioManager } from '../audio/audioManager';
 import { DayNightCycle } from './dayNightCycle';
-import { Environment } from './environment';
 import { TreasureSystem } from './treasureSystem';
+import { createRealTerrain } from './realTerrain';
 import { Debug } from '../utils/debug';
 
 export class PrototypeIslandScene {
@@ -39,17 +40,21 @@ export class PrototypeIslandScene {
     sun.intensity = 1.2;
     sun.diffuse = new Color3(1, 0.97, 0.9);
 
-    // Terrain (placeholder flat ground)
-    const ground = MeshBuilder.CreateGround('ground', { width: 200, height: 200, subdivisions: 20 }, scene);
-    const groundMat = new StandardMaterial('ground-mat', scene);
-    groundMat.diffuseColor = new Color3(0.3, 0.55, 0.2);
-    ground.material = groundMat;
+    const assetLoader = new AssetLoader(scene);
+
+    // Playable terrain generated from the large real terrain GLB so the browser does not crash.
+    createRealTerrain(scene);
+
+    const ground = MeshBuilder.CreateGround('walkable-collision-ground', { width: 78, height: 72, subdivisions: 4 }, scene);
+    ground.visibility = 0;
+    ground.isPickable = true;
     new PhysicsAggregate(ground, PhysicsShapeType.BOX, { mass: 0, restitution: 0, friction: 0.9 }, scene);
 
     // Traversal test pieces
     const climbWall = MeshBuilder.CreateBox('climb-wall-test', { width: 8, height: 5, depth: 0.6 }, scene);
     climbWall.position = new Vector3(-10, 2.5, 12);
     climbWall.metadata = { climbable: true };
+    climbWall.visibility = 0;
     const climbMat = new StandardMaterial('climb-wall-mat', scene);
     climbMat.diffuseColor = new Color3(0.45, 0.36, 0.24);
     climbWall.material = climbMat;
@@ -58,6 +63,7 @@ export class PrototypeIslandScene {
     const ledgePlatform = MeshBuilder.CreateBox('ledge-platform-test', { width: 7, height: 0.6, depth: 5 }, scene);
     ledgePlatform.position = new Vector3(-10, 5.4, 9);
     ledgePlatform.metadata = { climbable: true };
+    ledgePlatform.visibility = 0;
     ledgePlatform.material = climbMat;
     new PhysicsAggregate(ledgePlatform, PhysicsShapeType.BOX, { mass: 0, restitution: 0, friction: 0.9 }, scene);
 
@@ -72,6 +78,7 @@ export class PrototypeIslandScene {
 
     const swingPost = MeshBuilder.CreateCylinder('swing-post-test', { height: 7, diameter: 0.35 }, scene);
     swingPost.position = new Vector3(8, 3.5, 16);
+    swingPost.visibility = 0;
     const postMat = new StandardMaterial('swing-post-mat', scene);
     postMat.diffuseColor = new Color3(0.32, 0.19, 0.1);
     swingPost.material = postMat;
@@ -80,82 +87,12 @@ export class PrototypeIslandScene {
     const swingPoint = MeshBuilder.CreateSphere('whip-swing-point-test', { diameter: 0.7 }, scene);
     swingPoint.position = new Vector3(8, 7.2, 16);
     swingPoint.metadata = { swingPoint: true };
+    swingPoint.visibility = 0;
     const swingMat = new StandardMaterial('swing-point-mat', scene);
     swingMat.diffuseColor = new Color3(0.95, 0.78, 0.18);
     swingPoint.material = swingMat;
 
-    // Prototype island dressing. These placeholder meshes mark where real GLB assets will be swapped in.
-    const environment = new Environment(scene);
-    environment.spawnTrees(16, { minX: -42, maxX: 42, minZ: -42, maxZ: 42 });
-    environment.spawnRocks(12, { minX: -46, maxX: 46, minZ: -46, maxZ: 46 });
-
-    const caveEntrance = MeshBuilder.CreateBox('cave-entrance-placeholder', { width: 5, height: 4, depth: 1 }, scene);
-    caveEntrance.position = new Vector3(-26, 2, -24);
-    caveEntrance.metadata = { assetSlot: 'environment/cave-entrance.glb' };
-    const caveMat = new StandardMaterial('cave-entrance-mat', scene);
-    caveMat.diffuseColor = new Color3(0.08, 0.08, 0.07);
-    caveEntrance.material = caveMat;
-
-    const caveArch = MeshBuilder.CreateTorus('cave-arch-placeholder', {
-      diameter: 5.8,
-      thickness: 0.5,
-      tessellation: 18,
-    }, scene);
-    caveArch.position = new Vector3(-26, 2.1, -23.5);
-    caveArch.rotation.x = Math.PI / 2;
-    caveArch.metadata = { assetSlot: 'environment/cave-arch.glb' };
-    const caveArchMat = new StandardMaterial('cave-arch-mat', scene);
-    caveArchMat.diffuseColor = new Color3(0.25, 0.24, 0.22);
-    caveArch.material = caveArchMat;
-
-    const campMat = new StandardMaterial('camp-prop-mat', scene);
-    campMat.diffuseColor = new Color3(0.45, 0.23, 0.1);
-    for (let i = 0; i < 5; i++) {
-      const crate = MeshBuilder.CreateBox(`enemy-camp-crate-${i}`, { width: 1.2, height: 0.8, depth: 1.2 }, scene);
-      crate.position = new Vector3(16 + i * 1.8, 0.4, 5 + (i % 2) * 3);
-      crate.rotation.y = i * 0.45;
-      crate.material = campMat;
-      crate.metadata = { assetSlot: 'props/camp-crate.glb' };
-      new PhysicsAggregate(crate, PhysicsShapeType.BOX, { mass: 0, restitution: 0, friction: 0.8 }, scene);
-    }
-
-    const campfire = MeshBuilder.CreateCylinder('enemy-camp-fire-ring', { height: 0.15, diameter: 2.2 }, scene);
-    campfire.position = new Vector3(20, 0.08, 11);
-    const fireRingMat = new StandardMaterial('camp-fire-ring-mat', scene);
-    fireRingMat.diffuseColor = new Color3(0.12, 0.12, 0.12);
-    campfire.material = fireRingMat;
-
-    const villageMat = new StandardMaterial('village-hut-mat', scene);
-    villageMat.diffuseColor = new Color3(0.55, 0.36, 0.17);
-    for (let i = 0; i < 3; i++) {
-      const hut = MeshBuilder.CreateCylinder(`village-hut-${i}`, {
-        height: 2.6,
-        diameter: 3.2,
-        tessellation: 8,
-      }, scene);
-      hut.position = new Vector3(-18 + i * 5, 1.3, -4 + (i % 2) * 4);
-      hut.material = villageMat;
-      hut.metadata = { assetSlot: 'environment/village-hut.glb' };
-      new PhysicsAggregate(hut, PhysicsShapeType.CYLINDER, { mass: 0, restitution: 0, friction: 0.85 }, scene);
-
-      const roof = MeshBuilder.CreateCylinder(`village-hut-roof-${i}`, {
-        height: 1.2,
-        diameterTop: 0.2,
-        diameterBottom: 3.8,
-        tessellation: 8,
-      }, scene);
-      roof.position = new Vector3(hut.position.x, 3.2, hut.position.z);
-      roof.material = climbMat;
-      roof.metadata = { assetSlot: 'environment/village-roof.glb' };
-    }
-
-    const villageMarker = MeshBuilder.CreateBox('village-test-area-marker', { width: 10, height: 0.08, depth: 8 }, scene);
-    villageMarker.position = new Vector3(-13, 0.05, -2);
-    villageMarker.isPickable = false;
-    const villageMarkerMat = new StandardMaterial('village-marker-mat', scene);
-    villageMarkerMat.diffuseColor = new Color3(0.64, 0.52, 0.24);
-    villageMarkerMat.alpha = 0.35;
-    villageMarker.material = villageMarkerMat;
+    await PrototypeIslandScene.placeRealLevelAssets(scene, assetLoader);
 
     // Player
     const player = new PlayerController(scene, inputManager);
@@ -166,7 +103,7 @@ export class PrototypeIslandScene {
     spawner.spawnCamp({
       id: 'jungle-camp-alpha',
       center: new Vector3(20, 0, 10),
-      enemyCount: 3,
+      enemyCount: 1,
       patrolRadius: 8,
     });
 
@@ -204,5 +141,76 @@ export class PrototypeIslandScene {
 
     Debug.log('World', 'Prototype Island ready!');
     return scene;
+  }
+
+  private static async placeRealLevelAssets(scene: Scene, assetLoader: AssetLoader): Promise<void> {
+    const placements: Array<{
+      path: string;
+      name: string;
+      position: Vector3;
+      scaling: Vector3;
+      rotationY?: number;
+      collider?: { size: Vector3; centerOffset: Vector3; shape?: PhysicsShapeType };
+    }> = [
+      {
+        path: '/assets/models/environment/realistic-oak-tree.glb',
+        name: 'real-oak-tree-main',
+        position: new Vector3(6, 0, 7),
+        scaling: new Vector3(2.6, 2.6, 2.6),
+        collider: { size: new Vector3(0.8, 4, 0.8), centerOffset: new Vector3(0, 2, 0), shape: PhysicsShapeType.CYLINDER },
+      },
+      {
+        path: '/assets/models/environment/realistic-rock.glb',
+        name: 'real-rock-climb-base',
+        position: new Vector3(-9, 0, 7),
+        scaling: new Vector3(2.2, 1.6, 2.2),
+        rotationY: 0.3,
+        collider: { size: new Vector3(3, 1.8, 3), centerOffset: new Vector3(0, 0.9, 0) },
+      },
+      {
+        path: '/assets/models/environment/realistic-cliff.glb',
+        name: 'real-cliff-cave',
+        position: new Vector3(-24, 0, -18),
+        scaling: new Vector3(3.5, 3, 3.5),
+        rotationY: -0.6,
+        collider: { size: new Vector3(7, 5, 3), centerOffset: new Vector3(0, 2.5, 0) },
+      },
+      {
+        path: '/assets/models/props/temple-pillar.glb',
+        name: 'real-ruin-pillar-left',
+        position: new Vector3(-4, 0, -15),
+        scaling: new Vector3(1.7, 1.7, 1.7),
+        collider: { size: new Vector3(1.2, 3.2, 1.2), centerOffset: new Vector3(0, 1.6, 0), shape: PhysicsShapeType.CYLINDER },
+      },
+    ];
+
+    for (const item of placements) {
+      const model = await assetLoader.loadModelIfAvailable(item.path, item.name);
+      if (!model) continue;
+
+      model.rootMesh.position = item.position;
+      model.rootMesh.scaling = item.scaling;
+      model.rootMesh.rotation.y = item.rotationY ?? 0;
+      for (const mesh of model.meshes) {
+        mesh.isPickable = false;
+      }
+
+      if (item.collider) {
+        const collider = item.collider.shape === PhysicsShapeType.CYLINDER
+          ? MeshBuilder.CreateCylinder(`${item.name}-collider`, {
+            height: item.collider.size.y,
+            diameter: Math.max(item.collider.size.x, item.collider.size.z),
+          }, scene)
+          : MeshBuilder.CreateBox(`${item.name}-collider`, {
+            width: item.collider.size.x,
+            height: item.collider.size.y,
+            depth: item.collider.size.z,
+          }, scene);
+        collider.position = item.position.add(item.collider.centerOffset);
+        collider.visibility = 0;
+        collider.isPickable = true;
+        new PhysicsAggregate(collider as Mesh, item.collider.shape ?? PhysicsShapeType.BOX, { mass: 0, restitution: 0, friction: 0.85 }, scene);
+      }
+    }
   }
 }

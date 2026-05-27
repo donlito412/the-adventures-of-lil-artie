@@ -6,6 +6,7 @@ import {
   Scene,
   SceneLoader,
   AbstractMesh,
+  AnimationGroup,
   Texture,
   AssetsManager,
   MeshAssetTask,
@@ -17,6 +18,7 @@ import { Debug } from '../utils/debug';
 export interface LoadedModel {
   meshes: AbstractMesh[];
   rootMesh: AbstractMesh;
+  animationGroups: AnimationGroup[];
 }
 
 export class AssetLoader {
@@ -43,6 +45,7 @@ export class AssetLoader {
     return {
       meshes: result.meshes,
       rootMesh,
+      animationGroups: result.animationGroups,
     };
   }
 

@@ -17,6 +17,10 @@ _None._
 - [2026-05-25] [Resolved] Player/controller forward movement was inverted -> Keyboard forward and gamepad left-stick-up now map to positive forward movement.
 - [2026-05-26] [Resolved] Project files and tasks pointed at PlayCanvas after the engine pivot -> Restored Babylon.js dependencies, runtime wiring, documentation, tasks, and decision log.
 - [2026-05-26] [Resolved] Havok loaded Vite fallback HTML instead of the physics WASM file -> Served `HavokPhysics.wasm` from `public/assets/wasm/` and pointed the Babylon physics initializer to that URL.
+- [2026-05-26] [Resolved] Player movement direction was wrong after camera rotation -> Corrected third-person camera yaw mapping used by player movement.
+- [2026-05-26] [Resolved] Player could move from controller stick drift -> Increased gamepad deadzone and ignored small gamepad movement/camera axes.
+- [2026-05-26] [Resolved] Lil Artie walked in place at idle -> Paused the embedded locomotion animation unless movement state is walking or running.
+- [2026-05-26] [Resolved] Raw 352 MB terrain GLB crashed the browser -> Extracted a lightweight heightfield from the real terrain geometry for the playable level.
 
 ---
 

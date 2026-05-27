@@ -3,7 +3,7 @@
  * Coordinates movement, camera, combat, inventory, and stats.
  */
 
-import { Scene, MeshBuilder, Mesh, Vector3, Color3, StandardMaterial } from '@babylonjs/core';
+import { AnimationGroup, Scene, MeshBuilder, Mesh, Vector3, Color3, StandardMaterial } from '@babylonjs/core';
 import { InputManager } from '../input/inputManager';
 import { PlayerMovement } from './playerMovement';
 import { PlayerCamera } from './playerCamera';
@@ -29,6 +29,8 @@ export class PlayerController {
   private camera!: PlayerCamera;
   private combat!: PlayerCombat;
   private weaponManager!: WeaponManager;
+  private locomotionAnimation?: AnimationGroup;
+  private activeAnimationState: 'idle' | 'walk' | 'run' = 'idle';
 
   private deltaTime: number = 0;
 
@@ -84,6 +86,7 @@ export class PlayerController {
     this.movement.update(deltaTime, this.camera.yaw);
     this.camera.update(deltaTime);
     this.combat.update(deltaTime);
+    this.updateCharacterAnimation();
 
     // Weapon switching
     if (this.input.wasJustPressed('weaponNext')) this.inventory.nextWeapon();
@@ -120,8 +123,35 @@ export class PlayerController {
     model.rootMesh.parent = this.mesh;
     model.rootMesh.position = Vector3.Zero();
     model.rootMesh.scaling = new Vector3(1, 1, 1);
+    for (const group of model.animationGroups) {
+      group.stop();
+      group.goToFrame(0);
+    }
+    this.locomotionAnimation = model.animationGroups[0];
     this.mesh.visibility = 0;
     Debug.log('PlayerController', 'Loaded real Lil Artie GLB asset.');
+  }
+
+  private updateCharacterAnimation(): void {
+    if (!this.locomotionAnimation) return;
+
+    const movementState = this.movement.movementState;
+    const nextState = movementState === 'running'
+      ? 'run'
+      : movementState === 'walking'
+        ? 'walk'
+        : 'idle';
+
+    if (nextState === this.activeAnimationState) return;
+    this.activeAnimationState = nextState;
+
+    if (nextState === 'idle') {
+      this.locomotionAnimation.pause();
+      return;
+    }
+
+    this.locomotionAnimation.speedRatio = nextState === 'run' ? 1.45 : 1;
+    this.locomotionAnimation.play(true);
   }
 
   get playerMesh(): Mesh {
