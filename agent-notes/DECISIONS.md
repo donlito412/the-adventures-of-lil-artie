@@ -114,3 +114,11 @@ Major architectural and design decisions. All agents must read this before start
 **Decision**: Remove the current bundled Lil Artie and reused character GLBs from the active project.
 **Reason**: They displayed as wrong T-pose/duplicate characters, and the final Lil Artie character will be supplied separately.
 **Impact**: Player, NPC, and enemy systems keep invisible controller/collision meshes only until final character assets are added.
+
+---
+
+## [2026-05-27] First Land Asset Source Rules
+
+**Decision**: First-land environment assets must come from verified-license sources only, and character assets are excluded from external sourcing.
+**Reason**: The project is commercial and needs realistic production assets without license risk.
+**Impact**: KhronosGroup/Vulkan-Samples-Assets and TheWizardsCode/Terrains are approved import candidates. redhoot-dev/Godot-Open-World-Demo is review-only until a license is confirmed.

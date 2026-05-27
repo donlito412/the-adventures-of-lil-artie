@@ -1,0 +1,87 @@
+{
+  "scope": "First land environment and terrain assets only. Characters are excluded.",
+  "artDirection": "Realistic only. Do not use stylized or visible low-poly production assets.",
+  "importNow": [
+    {
+      "name": "Khronos terrain sample",
+      "repo": "KhronosGroup/Vulkan-Samples-Assets",
+      "url": "https://github.com/KhronosGroup/Vulkan-Samples-Assets",
+      "license": "Apache-2.0 for terrain sample per repo README",
+      "categories": [
+        "terrain",
+        "heightmap",
+        "terrain textures",
+        "rock reference"
+      ],
+      "files": [
+        "scenes/terrain/terrain.gltf",
+        "scenes/terrain/LICENSE.md",
+        "scenes/terrain/README.md",
+        "textures/terrain_heightmap_r16.ktx",
+        "textures/terrain_texturearray_rgba.ktx",
+        "scenes/rock.gltf"
+      ],
+      "decision": "Use as first licensed terrain import candidate after conversion to Babylon-ready assets."
+    },
+    {
+      "name": "TheWizardsCode Terrains",
+      "repo": "TheWizardsCode/Terrains",
+      "url": "https://github.com/TheWizardsCode/Terrains",
+      "license": "Apache-2.0",
+      "categories": [
+        "ground materials",
+        "rock textures",
+        "rocks",
+        "foliage",
+        "trees",
+        "ruins",
+        "camp structures",
+        "village structures"
+      ],
+      "files": [
+        "Assets/WizardsCode/Terrains/Models/Assets/OpenSourceModels/Rocks/Rock 01/Rock_01.OBJ",
+        "Assets/WizardsCode/Terrains/Models/Assets/OpenSourceModels/Rocks/Rock 04/Rock04_LP.OBJ",
+        "Assets/WizardsCode/Terrains/Models/Assets/OpenSourceModels/Rocks/Rock 05/Rock05_LP.OBJ",
+        "Assets/WizardsCode/Terrains/Models/Assets/OpenSourceModels/Rocks/Rock 07/Rock_07_LP.OBJ",
+        "Assets/WizardsCode/Terrains/Models/Assets/OpenSourceModels/Trees/Tree9/Tree9_Leaf.fbx",
+        "Assets/WizardsCode/Terrains/Textures/Assets/OpenSourceTextures/Ground/",
+        "Assets/WizardsCode/Terrains/Textures/Assets/OpenSourceTextures/Rock/",
+        "Assets/WizardsCode/Terrains/Textures/Assets/OpenSourceTextures/Plant/",
+        "Assets/WizardsCode/Terrains/Models/Assets/OpenSourceModels/Buildings/Medieval/"
+      ],
+      "decision": "Use selected realistic materials and source meshes after Blender cleanup and GLB export."
+    }
+  ],
+  "reviewOnly": [
+    {
+      "name": "Godot Open World Demo",
+      "repo": "redhoot-dev/Godot-Open-World-Demo",
+      "url": "https://github.com/redhoot-dev/Godot-Open-World-Demo",
+      "license": "No repo license found through GitHub API; raw LICENSE returned 404.",
+      "categories": [
+        "terrain",
+        "sky",
+        "weather reference"
+      ],
+      "files": [
+        "Terrain/Terrain.dae",
+        "Terrain/Albedo.png",
+        "Terrain/NormalMap.png",
+        "Terrain/TerrainShadowCaster.obj",
+        "Environment/Skies.png",
+        "Environment/SkySphere.obj",
+        "Environment/FogCylinder.obj"
+      ],
+      "decision": "Do not import until license is verified."
+    }
+  ],
+  "reject": [
+    "External character assets",
+    "CC-BY-NC assets",
+    "Unlicensed assets",
+    "Stylized assets",
+    "Visible low-poly production meshes",
+    "Copyrighted game assets",
+    "Copied maps"
+  ]
+}

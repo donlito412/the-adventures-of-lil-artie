@@ -1,5 +1,32 @@
 # REALISTIC ENVIRONMENT ASSET SOURCES
 
+Current detailed first-land shortlist: [FIRST_LAND_ASSET_PLAN.md](FIRST_LAND_ASSET_PLAN.md).
+
+## Verified GitHub Sources
+
+### KhronosGroup/Vulkan-Samples-Assets
+
+- URL: https://github.com/KhronosGroup/Vulkan-Samples-Assets
+- License: selected terrain assets are marked Apache 2.0 in the repo README.
+- Use: terrain source, heightmap workflow, terrain texture workflow, rock reference.
+- Candidate files: `scenes/terrain/terrain.gltf`, `textures/terrain_heightmap_r16.ktx`, `textures/terrain_texturearray_rgba.ktx`, `scenes/rock.gltf`.
+
+### TheWizardsCode/Terrains
+
+- URL: https://github.com/TheWizardsCode/Terrains
+- License: Apache 2.0.
+- Use: realistic ground textures, rocks, plants, tree source assets, stone/medieval structures for ruins, camp, and village areas.
+- Candidate paths: `Assets/WizardsCode/Terrains/Textures/Assets/OpenSourceTextures/`, `Assets/WizardsCode/Terrains/Models/Assets/OpenSourceModels/Rocks/`, `Assets/WizardsCode/Terrains/Models/Assets/OpenSourceModels/Trees/`, `Assets/WizardsCode/Terrains/Models/Assets/OpenSourceModels/Buildings/Medieval/`.
+
+## Review Only
+
+### redhoot-dev/Godot-Open-World-Demo
+
+- URL: https://github.com/redhoot-dev/Godot-Open-World-Demo
+- License: no license found during the GitHub pass.
+- Use: review/reference only until license is confirmed.
+- Do not import files from this repo yet.
+
 ## GitHub Sources To Review
 
 1. ToxSam/open-source-3D-assets

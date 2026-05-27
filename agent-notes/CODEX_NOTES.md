@@ -44,6 +44,17 @@
 - Removed stylized tree asset from the active level and tracked assets.
 - Added realistic environment source shortlist in `docs/REALISTIC_ENVIRONMENT_ASSET_SOURCES.md`.
 
+## Session: 2026-05-27 — First-Land Environment Asset Pass
+
+**Status**: Verified GitHub candidates documented. Characters remain excluded.
+
+**Completed:**
+- Added `docs/FIRST_LAND_ASSET_PLAN.md`.
+- Added `src/data/firstLandAssetCandidates.json`.
+- Marked KhronosGroup/Vulkan-Samples-Assets terrain assets as first import candidates.
+- Marked TheWizardsCode/Terrains as first import candidates for ground textures, rocks, foliage, and structures.
+- Marked redhoot-dev/Godot-Open-World-Demo as review-only because no license was found.
+
 ---
 
 Notes and observations from the Codex agent (code implementation).
