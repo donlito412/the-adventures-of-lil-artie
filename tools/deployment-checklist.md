@@ -22,7 +22,7 @@
 - [ ] Tested on Firefox (latest)
 - [ ] Tested on Edge (latest)
 - [ ] Target 60fps on mid-range laptop
-- [ ] Draw calls < 300 per frame (use PlayCanvas profiler/editor stats to verify)
+- [ ] Draw calls < 300 per frame (use Babylon Inspector or browser profiling to verify)
 - [ ] Total bundle size < 5MB (excluding assets)
 
 ### Controller

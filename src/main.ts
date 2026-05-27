@@ -23,6 +23,13 @@ game.init()
   })
   .catch((err) => {
     console.error('Failed to initialize game:', err);
+    window.__lilArtieInitError = err instanceof Error ? err.message : String(err);
     const statusEl = document.getElementById('loading-status');
-    if (statusEl) statusEl.textContent = 'Error loading game. Check console.';
+    if (statusEl) statusEl.textContent = `Error loading game: ${window.__lilArtieInitError}`;
   });
+
+declare global {
+  interface Window {
+    __lilArtieInitError?: string;
+  }
+}

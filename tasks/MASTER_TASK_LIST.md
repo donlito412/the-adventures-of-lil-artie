@@ -3,9 +3,9 @@
 ## Phase 1: Project Setup
 
 - [x] Initialize Vite + TypeScript project
-- [x] Install PlayCanvas
-- [x] Set up PlayCanvas runtime
-- [x] Set up GLB/GLTF asset loading
+- [x] Install Babylon.js
+- [x] Install Babylon.js loaders
+- [x] Install Havok Physics
 - [x] Set up folder structure
 - [x] Create main game canvas
 - [x] Create game engine bootstrap

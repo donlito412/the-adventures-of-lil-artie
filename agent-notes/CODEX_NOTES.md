@@ -1,5 +1,21 @@
 # CODEX NOTES
 
+## Session: 2026-05-26 — Babylon.js Runtime Restored
+
+**Status**: Active runtime is Babylon.js again.
+
+**Completed:**
+- Removed PlayCanvas runtime and Editor automation files from the active repo.
+- Replaced PlayCanvas dependency with Babylon.js, Babylon GUI, Babylon loaders, and Havok.
+- Rewired `src/game.ts` to use the Babylon engine, shared input manager, and scene manager.
+- Updated README, task files, tools docs, bug log, and decision log back to Babylon.js.
+- Added local Havok WASM serving so Babylon physics initializes in Vite dev and production builds.
+
+**Note:**
+- Older PlayCanvas notes below are historical only and are no longer active project direction.
+
+---
+
 Notes and observations from the Codex agent (code implementation).
 
 ---

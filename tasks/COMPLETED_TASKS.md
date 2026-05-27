@@ -73,27 +73,10 @@ _Log completed work here. Format: `[DATE] [AGENT] Task description`_
 - [2026-05-25] [CODEX] Kept placeholder world geometry low-poly for browser performance
 - [2026-05-25] [CODEX] Verified Phase 7 with `npm run type-check`, `npm run build`, and browser scene launch around 50 FPS
 
-## Engine Pivot
+## Engine Restore
 
-- [2026-05-25] [CODEX] Switched active runtime from Babylon.js to PlayCanvas
-- [2026-05-25] [CODEX] Installed PlayCanvas and removed Babylon runtime dependencies
-- [2026-05-25] [CODEX] Added active PlayCanvas scene bootstrap, movement test, camera follow, lighting, and asset-slot loader
-- [2026-05-25] [CODEX] Updated README, asset intake notes, and decision log for PlayCanvas-first workflow
-- [2026-05-25] [CODEX] Generated PlayCanvas REST API token and verified project branch `main`
-- [2026-05-25] [CODEX] Added PlayCanvas Editor-ready scripts for input, third-person camera, player movement, and asset slot tagging
-- [2026-05-25] [CODEX] Uploaded PlayCanvas scripts and project setup manifest to project `1533403`, scene `2507920`
-- [2026-05-25] [CODEX] Wired `snowy_mountain_terrain__optimized_mesh.glb` into the active PlayCanvas runtime terrain slot
-- [2026-05-25] [CODEX] Uploaded `snowy_mountain_terrain__optimized_mesh.glb` to the PlayCanvas asset library for project `1533403`
-- [2026-05-25] [CODEX] Placed uploaded terrain model into the PlayCanvas Editor scene hierarchy as `REAL_TERRAIN__snowy_mountain_terrain`
-- [2026-05-25] [CODEX] Added Meshy skinned character GLB to the active Lil Artie character asset slot
-- [2026-05-25] [CODEX] Uploaded Lil Artie Meshy GLB to PlayCanvas and placed it in the Editor scene as `REAL_LIL_ARTIE__meshy_character`
-- [2026-05-25] [CODEX] Removed default PlayCanvas `Box`/`Plane` entities from the live scene
-- [2026-05-25] [CODEX] Reframed the live PlayCanvas launch camera so Lil Artie is visible
-- [2026-05-25] [CODEX] Offset Lil Artie onto the visible snowy terrain mesh in the live PlayCanvas scene
-- [2026-05-25] [CODEX] Corrected the live PlayCanvas spawn/camera again after verification showed Lil Artie still at the terrain edge
-- [2026-05-25] [CODEX] Attached live PlayCanvas movement and camera scripts to the real Lil Artie and Camera entities
-- [2026-05-25] [CODEX] Updated art direction to require realistic / stylized-realistic production assets instead of low-poly assets
-- [2026-05-26] [CODEX] Built a local PlayCanvas explorable scene using real local assets from `/Volumes/Lito's Hard Drive/Lito's Games/Wolf Pacc`
-- [2026-05-26] [CODEX] Added real GLB props for oak trees, rocks, cliff, treasure chest, temple pillars, boomerang, dagger, and whip
-- [2026-05-26] [CODEX] Fixed local Lil Artie animation graph setup and scaled the Meshy character to playable size
-- [2026-05-26] [CODEX] Verified the local scene in browser at `http://127.0.0.1:3001/` and verified `npm run build`
+- [2026-05-26] [CODEX] Restored Babylon.js as the active local runtime
+- [2026-05-26] [CODEX] Replaced PlayCanvas dependency with Babylon.js, Babylon GUI, Babylon loaders, and Havok
+- [2026-05-26] [CODEX] Removed PlayCanvas runtime and Editor automation files from the active repo
+- [2026-05-26] [CODEX] Updated README, tasks, tools, and decision log back to Babylon.js direction
+- [2026-05-26] [CODEX] Added local Havok WASM serving for Babylon physics and verified the browser scene at http://127.0.0.1:3002/

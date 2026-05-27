@@ -5,7 +5,7 @@
 
 ## Overview
 
-All 3D assets are created or cleaned in Blender and exported as GLB (binary GLTF) for use in PlayCanvas.
+All 3D assets are created or cleaned in Blender and exported as GLB (binary GLTF) for use in Babylon.js.
 
 ---
 
@@ -24,7 +24,7 @@ Export as GLB (see blender-export-rules.md)
     ↓
 Place in correct public/assets/models/ subfolder
     ↓
-Test in PlayCanvas Editor or a local PlayCanvas scene before committing to gameplay.
+Test in the local Babylon.js scene before committing to gameplay.
     ↓
 Commit GLB to repo (use Git LFS for files > 5MB)
 ```
@@ -59,7 +59,7 @@ Commit GLB to repo (use Git LFS for files > 5MB)
 
 ---
 
-## PlayCanvas Loading
+## Babylon.js Loading
 
 All GLBs are loaded via `AssetLoader.loadModel(path)` which uses `SceneLoader.ImportMeshAsync`.
 

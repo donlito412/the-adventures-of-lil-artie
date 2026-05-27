@@ -33,9 +33,7 @@
     }
   },
   "include": [
-    "src/main.ts",
-    "src/game.ts",
-    "src/playcanvas/**/*.ts",
+    "src/**/*.ts",
     "src/vite-env.d.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]

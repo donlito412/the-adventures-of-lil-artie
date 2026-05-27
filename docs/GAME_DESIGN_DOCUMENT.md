@@ -14,8 +14,8 @@
 The game draws from the action-adventure tradition: exploration, puzzle-solving, combat, and discovery. It is entirely original — no licensed assets, no copied maps, no cloned mechanics.
 
 **Platform**: Web browser (desktop-first, mobile later)  
-**Engine**: PlayCanvas + TypeScript + Vite  
-**Physics**: PlayCanvas physics/collision systems  
+**Engine**: Babylon.js + TypeScript + Vite  
+**Physics**: Havok Physics through Babylon.js  
 **Controller**: Xbox, PlayStation, Keyboard/Mouse
 
 ---
@@ -126,11 +126,11 @@ Factions:
 
 | System | Technology |
 |---|---|
-| Renderer | PlayCanvas |
-| Physics | PlayCanvas physics/collision systems |
+| Renderer | Babylon.js |
+| Physics | Havok Physics |
 | Input | Browser Gamepad API + Keyboard/Mouse |
-| UI | PlayCanvas screen/UI systems or HTML overlay UI |
-| Audio | PlayCanvas audio |
+| UI | Babylon GUI or HTML overlay UI |
+| Audio | Babylon audio |
 | Assets | GLB/GLTF from Blender |
 | Build | Vite + TypeScript |
 | Deploy | Vercel (primary), Netlify (backup) |

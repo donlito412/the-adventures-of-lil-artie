@@ -12,12 +12,12 @@ Lil Artie is an African American teenage explorer with dreadlocks. Armed with a 
 
 | System | Technology |
 |---|---|
-| 3D Engine | [PlayCanvas](https://playcanvas.com/) |
+| 3D Engine | [Babylon.js](https://www.babylonjs.com/) |
 | Language | TypeScript |
 | Bundler | Vite |
-| Editor | PlayCanvas Editor for scene/layout work |
-| Rendering | WebGL/WebGPU-capable browser rendering through PlayCanvas |
-| Assets | GLB/GLTF from Meshy, Blender, purchased packs, or PlayCanvas exports |
+| Rendering | WebGPU first, WebGL fallback through Babylon.js |
+| Physics | Havok Physics |
+| Assets | GLB/GLTF from Meshy, Blender, or purchased packs |
 | Deploy | Vercel / Netlify |
 
 ---
@@ -67,16 +67,15 @@ See `docs/CONTROLLER_SUPPORT.md` for full button mapping.
 
 ## Current Engine Direction
 
-The active playable build is the local Vite + PlayCanvas runtime.
+The active playable build is the local Vite + Babylon.js runtime.
 
 Use:
 - Local `public/assets` for real GLB/GLTF game assets
-- PlayCanvas Editor only when useful for visual layout tests
 - Blender for asset cleanup, rigging, optimization, and GLB export
 - Meshy and purchased assets as source assets
 - Vite/TypeScript for gameplay code and publishing pipeline
 
-The PlayCanvas cloud editor is not the source of truth because the account storage limit is too small for realistic open-world production assets. The previous Babylon.js prototype files remain in `src/` as inactive reference code during the transition, but TypeScript currently checks only the active PlayCanvas runtime.
+Babylon.js is the source of truth for the runtime. Do not add PlayCanvas, Unity, Godot, or Unreal runtime code unless the project direction changes again.
 
 ---
 
@@ -85,8 +84,7 @@ The PlayCanvas cloud editor is not the source of truth because the account stora
 ```
 the-adventures-of-lil-artie/
 ├── src/              # TypeScript source (Codex territory)
-│   ├── playcanvas/   # Active PlayCanvas runtime
-│   ├── core/         # Legacy Babylon prototype reference during transition
+│   ├── core/         # Babylon engine, physics, config, assets, save system
 │   ├── input/        # Keyboard, mouse, gamepad input
 │   ├── player/       # Player controller, movement, camera, combat
 │   ├── weapons/      # Boomerang, dagger, whip
@@ -164,4 +162,4 @@ the-adventures-of-lil-artie/
 ## License
 
 Original game — all rights reserved. No copyrighted assets used.  
-Built with browser-first tools: PlayCanvas, Vite, and TypeScript.
+Built with browser-first tools: Babylon.js, Vite, and TypeScript.

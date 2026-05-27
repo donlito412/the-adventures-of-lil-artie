@@ -29,7 +29,7 @@ File → Export → glTF 2.0 (.glb/.gltf)
 - Punctual Lights: ❌
 
 **Transform**:
-- Y Up: ✅ (PlayCanvas uses Y-up)
+- Y Up: ✅ (Babylon.js uses Y-up)
 
 **Geometry**:
 - Apply Modifiers: ✅
@@ -49,7 +49,7 @@ File → Export → glTF 2.0 (.glb/.gltf)
 
 ## Material Setup in Blender
 
-Use **Principled BSDF** shader for all materials. PlayCanvas maps these to PBR:
+Use **Principled BSDF** shader for all materials. Babylon.js maps these to PBR:
 
 | Blender Input | Maps to |
 |---|---|

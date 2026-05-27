@@ -19,7 +19,7 @@ Place files here with these names:
 - `public/assets/models/weapons/dagger.glb`
 - `public/assets/models/weapons/whip.glb`
 
-The active PlayCanvas runtime auto-loads these files when present and falls back to placeholders when missing.
+The active Babylon.js runtime auto-loads these files when present and falls back to placeholders when missing.
 
 ## Active Terrain
 
@@ -42,7 +42,7 @@ The active character uses the Meshy walking skinned GLB as the first playable ch
 3. Check scale, pivot, material names, texture links, and polygon count.
 4. Export as `.glb`.
 5. Place it in the matching `public/assets/models/` folder.
-6. Test it in the PlayCanvas scene.
+6. Test it in the Babylon.js scene.
 
 ## Purchased Asset Checks
 

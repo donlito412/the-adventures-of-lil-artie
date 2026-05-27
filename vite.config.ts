@@ -32,7 +32,9 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          playcanvas: ['playcanvas'],
+          babylon: ['@babylonjs/core'],
+          babylonGui: ['@babylonjs/gui'],
+          babylonLoaders: ['@babylonjs/loaders'],
         },
       },
     },

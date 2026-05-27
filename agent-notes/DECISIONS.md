@@ -6,7 +6,7 @@ Major architectural and design decisions. All agents must read this before start
 
 ## [2026-05-24] Engine Choice: Babylon.js + Vite + TypeScript
 
-**Status**: Superseded on 2026-05-25 by PlayCanvas First.
+**Status**: Active again as of 2026-05-26.
 
 **Decision**: Use Babylon.js v7 with Vite bundler and TypeScript.
 **Alternatives considered**: Three.js (less game-focused), A-Frame (too limited), PlayCanvas (proprietary).
@@ -17,7 +17,7 @@ Major architectural and design decisions. All agents must read this before start
 
 ## [2026-05-24] Physics: Havok via @babylonjs/havok
 
-**Status**: Superseded on 2026-05-25 by PlayCanvas First.
+**Status**: Active again as of 2026-05-26.
 
 **Decision**: Use Havok WASM physics for player and enemy collision.
 **Reason**: Babylon.js official physics plugin. Best performance for capsule colliders.
@@ -85,32 +85,16 @@ Major architectural and design decisions. All agents must read this before start
 
 ---
 
-## [2026-05-25] Engine Pivot: PlayCanvas First
-
-**Decision**: Switch the active runtime from Babylon.js to PlayCanvas.
-**Reason**: The project needs a sellable asset-first workflow with an online editor, real GLB assets, visual scene layout, and fewer tool switches.
-**Impact**: `src/main.ts`, `src/game.ts`, and `src/playcanvas/` are the active runtime. Babylon prototype files remain temporarily as inactive reference code. Dependencies now use `playcanvas`.
-
----
-
-## [2026-05-25] Automation: PlayCanvas REST API + Editor API
-
-**Decision**: Use PlayCanvas REST API for repeatable uploads/build automation and the PlayCanvas Editor/API for scene hierarchy work.
-**Reason**: REST API is stable for script/json asset uploads and project queries. Scene layout still benefits from the browser editor.
-**Impact**: Editor-ready assets now live in `public/playcanvas/` and are uploaded to PlayCanvas project `1533403` on branch `main`.
-
----
-
 ## [2026-05-25] Art Direction: Realistic / Stylized-Realistic, Not Low-Poly
 
 **Decision**: Production assets should target a realistic or stylized-realistic premium adventure look. Do not use low-poly assets for sale-ready scenes.
 **Reason**: The game is intended for commercial sale and should present higher visual quality than blockout or prototype art.
-**Impact**: Meshy, purchased, Blender, and PlayCanvas assets must be evaluated for realistic PBR materials, believable scale, and sufficient detail. Low-poly assets are allowed only as temporary collision proxies or distant LODs.
+**Impact**: Meshy, purchased, Blender, and Babylon-ready GLB assets must be evaluated for realistic PBR materials, believable scale, and sufficient detail. Low-poly assets are allowed only as temporary collision proxies or distant LODs.
 
 ---
 
-## [2026-05-26] Runtime Storage: Local Assets First
+## [2026-05-26] Engine Restore: Babylon.js Active Runtime
 
-**Decision**: Keep the local Vite/PlayCanvas runtime as the primary playable build and load production assets from `public/assets` instead of depending on PlayCanvas cloud storage.
-**Reason**: The PlayCanvas account storage limit is too small for realistic open-world assets, terrain, textures, and animation sets.
-**Impact**: PlayCanvas Editor remains optional for layout tests, but the playable browser scene must run locally from the repo and can later deploy to Vercel/Netlify or another host with enough asset storage.
+**Decision**: Revert the active runtime, tasks, and documentation back to Babylon.js.
+**Reason**: PlayCanvas cloud storage limits and workflow friction made it a poor fit for the current production direction.
+**Impact**: `src/game.ts` uses the Babylon engine, input manager, and scene manager again. PlayCanvas runtime and Editor automation files are removed from the active repo.

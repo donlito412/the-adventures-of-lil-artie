@@ -8,11 +8,11 @@ Rules:
 - Explain planned changes before editing.
 - Keep code modular.
 - Use TypeScript.
-- Use PlayCanvas best practices.
+- Use Babylon.js best practices.
 - Update COMPLETED_TASKS.md after finishing work.
 
 Tasks:
-1. Create Vite + TypeScript PlayCanvas setup.
+1. Create Vite + TypeScript Babylon.js setup.
 2. Build engine bootstrap.
 3. Build scene manager.
 4. Build input manager.
